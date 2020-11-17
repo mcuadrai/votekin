@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<!--<div class="se-pre-con"></div>-->
+	<div class="theme-layout gap gray-bg">
+		<div class="container-fluid pdng0">
+			<div class="row merged">
+				<div class="col-lg-3">
+					<aside class="sidebar static"></aside>
+				</div>
+				<div class="col-lg-6">
+
+					<div class="login-reg-bg">
+						<div class="log-reg-area reg">
+							<div class="alert alert-danger" th:if="${error != null}"
+								th:text="${error}"></div>
+							<h2 class="log-title">Register</h2>
+							<p>
+								Don't use Votekin Yet? <a href="#" title="">Take the tour</a> or
+								<a href="#" title="">Join now</a>
+							</p>
+							<form method="post" th:action="@{/signup}" th:object="${user}"
+								id="signupForm">
+								<div class="form-group">
+									<label class="control-label" for="name">First & Last
+										Name</label> <input type="text" required="required" th:field="*{name}"
+										autofocus /> <i class="mtrl-select"></i> <small
+										class="form-text text-danger"
+										th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+								</div>
+								<div class="form-group">
+									<label class="control-label" for="email">Email</label> <input
+										type="email" required="required" th:field="*{email}" /> <i
+										class="mtrl-select"></i> <small class="form-text text-danger"
+										th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+								</div>
+								<div class="form-group">
+									<label class="control-label" for="password">Password</label> <input
+										type="password" required="required" th:field="*{password}" />
+									<i class="mtrl-select"></i> <small
+										class="form-text text-danger"
+										th:if="${#fields.hasErrors('password')}"
+										th:errors="*{password}"></small>
+								</div>
+								<div class="checkbox">
+									<label> <input type="checkbox" checked="checked" /><i
+										class="check-box"></i>Accept Terms & Conditions ?
+									</label>
+								</div>
+								<a href="#" title="" class="already-have">Already have an
+									account</a>
+								<div class="submit-btns">
+									<button class="mtr-btn" type="submit">
+										<span th:text="#{text.home.button.signup}">Register</span>
+									</button>
+								</div>
+
+							</form>
+
+							<div class="OR">Or Connect with</div>
+							<div class="submit-btns login-with">
+								<form th:action="@{/signin/facebook}" method="POST">
+									<button class="mtr-btn signin fb" type="submit">
+										<i class="fa fa-facebook" aria-hidden="true"></i><span>Facebook</span>
+									</button>
+									<!-- <input type="hidden" name="scope" value="email,publish_stream,offline_access" /> -->
+									<input type="hidden" name="scope" value="email" />
+								</form>
+								<form th:action="@{/signin/google}" method="POST">
+									<input type="hidden" name="scope" value="https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile" />
+									<button class="mtr-btn google-plus" type="submit">
+										<i class="fa fa-google" aria-hidden="true"></i><span>Google</span>
+									</button>
+								</form>
+								<form th:action="@{/signin/linkedin}" method="POST">
+								<input type="hidden" name="scope" value="r_emailaddress,r_basicprofile" />
+									<button class="mtr-btn linkedin" type="submit">
+										<i class="fa fa-linkedin" aria-hidden="true"></i><span>LinkedIn</span>
+									</button>
+								</form>
+							</div>
+
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="layout/layout :: scriptero"></div>
+	<script th:if="${errorSignup != null}" type="text/javascript">
+		// $('.login-reg-bg').addClass('show');
+	</script>
+
+	<script type="text/javascript">
+		$('.login-reg-bg').addClass('show');
+	</script>
+</body>
+</html>

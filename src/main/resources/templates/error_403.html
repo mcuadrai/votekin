@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+<!--<div class="se-pre-con"></div>-->
+<div class="theme-layout">
+	<div class="container-fluid pdng0">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="error-page">
+					<div class="bg-image" style="background-image: url(images/resources/404.jpg)"></div>
+					<div class="error-meta">
+						<h1 th:text="#{text.security.error.403.titulo}">Acceso denegado</h1>
+						<span th:utext="#{text.security.error.403.permiso(${#authentication.name})}"></span>
+						<a th:href="@{/home}" role="button" th:text="#{text.security.error.403.volver}">Home</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	<div th:replace="layout/layout :: scriptero" ></div>
+</body>	
+</html>

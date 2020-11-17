@@ -1,0 +1,442 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:fragment="head">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>Votekin</title>
+
+<link rel="icon" th:href="@{/images/fav.png}" type="image/png"
+	sizes="16x16">
+
+<link rel="stylesheet" th:href="@{/css/main.min.css}">
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/color.css}">
+<link rel="stylesheet" th:href="@{/css/responsive.css}">
+<link rel="stylesheet" th:href="@{/css/post-dark-theme.css}">
+<!-- <link rel="stylesheet" th:href="@{/css/selectize.bootstrap4.css}"> -->
+
+
+</head>
+
+<body>
+	<!--<div class="se-pre-con"></div>-->
+	<div class="theme-layout">
+
+		<div class="responsive-header" th:fragment="responsive-header">
+			<div class="mh-head first Sticky">
+				<span class="mh-btns-left"> <a class="" href="#menu"><i
+						class="fa fa-align-justify"></i></a>
+				</span> <span class="mh-text"> <a href="newsfeed.html" title=""><img
+						th:src="@{/images/logo2.png}" alt=""></a>
+				</span> <span class="mh-btns-right"> <!-- a class="fa fa-sliders" href="#shoppingbag"></a-->
+				</span>
+			</div>
+			<div class="mh-head second"></div>
+
+			<nav id="menu" class="res-menu">
+				<ul sec:authorize="isAuthenticated()">
+					<li><span>Posts</span>
+						<ul>
+							<li><a th:href="@{/opinion/addNewPost}" title=""
+								th:text="#{action.addPost}">Add post</a></li>
+							<li><a th:href="@{/opinion/recentposts}" title=""
+								th:text="#{action.recentPost}">Recent posts</a></li>
+							<li><a th:href="@{/opinion/myposts}" title=""
+								th:text="#{action.myPosts}">My posts</a></li>
+						</ul></li>
+					<li><span>Account Setting</span>
+						<ul>
+							<li><a href="edit-account-setting.html" title="">view
+									profile</a></li>
+							<li><a href="edit-work-eductation.html" title="">data
+									Electoral</a></li>
+						</ul></li>
+					<li><a href="about.html" title="">how to use</a></li>
+					<li><a href="about.html" title="">about</a></li>
+					<li><a href="contact.html" title="">contact</a></li>
+				</ul>
+			</nav>
+			<!-- nav   id="shoppingbag">
+        <div sec:authorize="isAuthenticated()">
+          <div class="">
+            <h4 class="panel-title">Agreement Setting</h4>
+            <form method="post">
+              <div class="setting-row">
+                <span>only positive</span>
+                <input type="checkbox" id="nightmode" />
+                <label for="nightmode" data-on-label="ON" data-off-label="OFF"></label>
+              </div>
+              <div class="setting-row">
+                <span>only negative</span>
+                <input type="checkbox" id="switch2" />
+                <label for="switch2" data-on-label="ON" data-off-label="OFF"></label>
+              </div>
+              <div class="setting-row">
+                <span>only interesting</span>
+                <input type="checkbox" id="switch3" />
+                <label for="switch3" data-on-label="ON" data-off-label="OFF"></label>
+              </div>
+            </form>
+            <h4 class="panel-title">Social climate Setting</h4>
+            <form method="post">
+              <div class="setting-row">
+                <span>Only Populist</span>
+                <input type="checkbox" id="switch4" />
+                <label for="switch4" data-on-label="ON" data-off-label="OFF"></label>
+              </div>
+              <div class="setting-row">
+                <span>Only Troll</span>
+                <input type="checkbox" id="switch5" />
+                <label for="switch5" data-on-label="ON" data-off-label="OFF"></label>
+              </div>
+              <div class="setting-row">
+                <span>Only Violence</span>
+                <input type="checkbox" id="switch6" />
+                <label for="switch6" data-on-label="ON" data-off-label="OFF"></label>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </nav-->
+
+		</div>
+		<!-- responsive header -->
+		<div sec:authorize="isAuthenticated()" class="topbar stick"
+			th:fragment="topbar-stick">
+			<div class="logo">
+				<a title="" href="javascript:;"><img
+					th:src="@{/images/resources/votekin-logo.png}" style="width: 60px;"
+					alt=""></a>
+			</div>
+			<!-- <ul class="search-header">
+				<li>
+					<form action="/opinion/recentposts" method="get" id="search-form">
+						<input type="text" name="text" id="search-text"
+							class="form-control" placeholder="Search..">
+
+						<div class="attachments header-search" style="display: none;">
+							<div class="new-post-data" align="left">
+								<i class="fa fa-th-large recent-post-icons" title="Add Categoty"
+									aria-hidden="true"></i>
+								 <div class="recent-post-items" style="display: none;">
+									<select class="recent-post-items" required="required"
+										name="themes" style="display: none;">
+										<option style="align: left" value="1">Politics</option>
+										<option style="align: left" value="2">Economy and
+											Business</option>
+										<option style="align: left" value="3">Personal Growth</option>
+										<option style="align: left" value="4">Financial
+											Freedom</option>
+										<option style="align: left" value="5">Leiusure</option>
+										<option style="align: left" value="6">Science</option>
+										<option style="align: left" value="7">Ethic</option>
+										<option style="align: left" value="8">Society</option>
+										<option style="align: left" value="9">Art</option>
+										<option style="align: left" value="10">Religion</option>
+										<option style="align: left" value="11">Economic
+											system</option>
+										<option style="align: left" value="12">Knowledge</option>
+									</select>
+								</div>
+
+
+							</div>
+							<div class="new-post-data upload-img">
+								<i class="fa fa-tags recent-post-icons" title="Add Tag"
+									aria-hidden="true"></i>
+								<span>Tags: </span>
+								<input type="text" value="Amsterdam,Washington" data-role="tagsinput" >
+								<div style="width: auto; margin-top: 5px; display: none;"
+									class="recent-post-items">
+									<input type="hidden" name="_tags" value="1"><select
+										multiple="" data-role="tagsinput"
+										class="form-control recent-post-items" name="tags"
+										style="display: none;">
+										<option value="Amsterdam">Amsterdam</option>
+							  <option value="Washington">Washington</option>
+							  <option value="Sydney">Sydney</option>
+							  <option value="Beijing">Beijing</option>
+							  <option value="Cairo">Cairo</option>
+									</select>
+								</div>
+							</div>
+							<div class="new-post-data upload-img">
+								<h6>Agreements</h6>
+								<input type="checkbox" name="choiceId" value="1">positive<br>
+								<input type="checkbox" name="choiceId" value="2">
+								negative<br> <input type="checkbox" name="choiceId"
+									value="3" checked> Interesting
+							</div>
+							<div class="new-post-data upload-img">
+								<h6>Social Climate</h6>
+								<input type="checkbox" name="choiceId" value="9">
+								populist<br> <input type="checkbox" name="choiceId"
+									value="11"> annoying<br> <input type="checkbox"
+									name="choiceId" value="12" checked> violent
+							</div>
+
+							<div class="new-post-data">
+								<button type="submit">Find</button>
+							</div>
+						</div>
+					</form>
+				</li>
+			</ul> -->
+			<div class="top-area">
+
+				<ul class="main-menu">
+					<li><a href="#" title="">Posts</a>
+						<ul>
+							<li><a th:href="@{/opinion/addNewPost}" title=""
+								th:text="#{action.addPost}">Add post</a></li>
+							<li><a th:href="@{/opinion/recentposts}" title=""
+								th:text="#{action.recentPosts}">Recent posts</a></li>
+							<!-- <li><a th:href="@{/opinion/myposts}" title=""
+								th:text="#{action.myPosts}">My posts</a></li> -->
+								<li><a th:href="@{/opinion/myposts}" title=""
+								th:text="#{action.myPosts}" data-toggle="modal" data-target="#myModal">My posts</a></li>
+						</ul></li>
+				</ul>
+
+				<ul>
+					<li><a th:href="@{/opinion/findComments}" title="search"> <img
+							th:src="@{/images/resources/search.png}" alt="" /> <span>Search</span>
+					</a></li>
+					<li><a th:href="@{/opinion/recentposts}" title="Home"> <img
+							th:src="@{/images/resources/home.png}" alt="" /> <span>Home</span>
+					</a></li>
+					<li><a th:href="@{/opinion/recentposts}" title="Home"> <img
+							th:src="@{/images/resources/notification.png}" alt="" /> <span>Notification</span>
+					</a></li>
+					<li class="dropdown menu-toggle-btn"><a href="#"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+						title="Languages"> <img
+							th:src="@{/images/resources/earth.png}" alt="" /> <span>Language</span>
+					</a>
+						<div class="user-setting menu-toggle"
+							aria-labelledby="dropdownMenuButton">
+							<a th:href="@{/locale(lang=en_US)}" th:text="#{text.locale.en}"
+								class="dropdown-item"><i class="ti-check"></i><span>English</span></a>
+							<a th:href="@{/locale(lang=es_ES)}" th:text="#{text.locale.es}"
+								class="dropdown-item">Spanish</a> <a
+								th:href="@{/locale(lang=de_DE)}" th:text="#{text.locale.de}"
+								class="dropdown-item">German</a>
+						</div></li>
+				</ul>
+
+				<div class="user-img menu-toggle-btn">
+					<img th:if="${#authentication.principal.ciudadano == null}"
+						th:src="@{/images/resources/admin.jpg}" alt="" /> <img
+						th:if="${#authentication.principal.ciudadano != null && #authentication.principal.ciudadano.fotoAvatarSmall != null}"
+						th:src="@{'/users/uploads/' + ${#authentication.principal.ciudadano.fotoAvatarSmall}}" />
+
+					<span class="me-profile">Me</span> <span class="status f-online"></span>
+					<div class="user-setting menu-toggle">
+						<span sec:authentication="principal.name"></span>
+						<form method="get" id="setForm1" class="header-profile"
+							th:action="@{'/users/'+${#authentication.principal.id}}">
+							<a onclick="document.getElementById('setForm1').submit();"><img
+								th:src="@{/images/resources/profile.png}" alt="" /> view
+								profile</a>
+						</form>
+						<form method="get" id="setForm" class="header-profile"
+							th:action="@{'/users/'+${#authentication.principal.id}+'/setting'}">
+							<a onclick="document.getElementById('setForm').submit();"><img
+								th:src="@{/images/resources/settings.png}" alt="" />Setting and
+								Privacy</a>
+						</form>
+						<a href="#" title=""><img
+							th:src="@{/images/resources/settings.png}" alt="" />electoral
+							data</a>
+						<form method="post" th:action="@{/logout}" id="logoutForm"
+							class="header-profile">
+							<button title=""
+								onclick="document.getElementById('logoutForm').submit();"
+								type="submit">
+								<img th:src="@{/images/resources/logout.png}" alt="" />log out
+							</button>
+						</form>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- topbar -->
+
+
+
+		<div th:fragment="messages" th:remove="tag">
+			<div class="alert alert-success" th:if="${success != null}"
+				th:text="${success}"></div>
+			<div class="alert alert-danger" th:if="${error != null}"
+				th:text="${error}"></div>
+			<div class="alert alert-warning" th:if="${warning != null}"
+				th:text="${warning}"></div>
+			<div class="alert alert-info" th:if="${info != null}"
+				th:text="${info}"></div>
+			<div id="alert-msg" class="alert alert-info" style="display:none"></div>
+				
+				
+		</div>
+
+		<section>
+			<div class="gap gray-bg">
+				<div class="container-fluid"></div>
+			</div>
+		</section>
+
+		<footer th:fragment="footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-4 col-md-4">
+						<div class="widget">
+							<div class="foot-logo">
+								<div class="logo">
+									<a href="index.html" title=""><img
+										th:src="@{/images/logo.png}" alt=""></a>
+								</div>
+								<p>The power of citizens to find agreements.</p>
+							</div>
+							<ul class="location">
+								<li><i class="ti-map-alt"></i>
+									<p>Mujica</p></li>
+								<li><i class="ti-mobile"></i>
+									<p></p></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="col-lg-2 col-md-4">
+						<div class="widget">
+							<div class="widget-title">
+								<h4>Navigate</h4>
+							</div>
+							<ul class="list-style">
+								<li><a href="about.html" title="">about us</a></li>
+								<li><a href="contact.html" title="">contact us</a></li>
+								<li><a href="terms.html" title="">terms and conditions</a></li>
+								<li><a href="#" title="">RSS syndication</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-2 col-md-4">
+						<div class="widget">
+							<div class="widget-title">
+								<h4>useful links</h4>
+							</div>
+							<ul class="list-style">
+								<li><a href="#" title="">how does it work?</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-2 col-md-4">
+						<div class="widget">
+							<div class="widget-title">
+								<h4>download apps</h4>
+							</div>
+							<ul class="colla-apps">
+								<li><a href="https://play.google.com/store?hl=en" title=""><i
+										class="fa fa-android"></i>android</a></li>
+								<li><a href="https://www.apple.com/lae/ios/app-store/"
+									title=""><i class="ti-apple"></i>iPhone</a></li>
+								<li><a href="https://www.microsoft.com/store/apps" title=""><i
+										class="fa fa-windows"></i>Windows</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		
+		<!-- footer -->
+		
+		<div class="bottombar" th:fragment="bottombar">
+		
+		<div class="modal fade" id="myModal" role="dialog">
+		    <div class="modal-dialog">
+		    
+		      <!-- Modal content-->
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		          <h4 class="modal-title">Modal Header</h4>
+		        </div>
+		        <div class="modal-body">
+		          <p>Some text in the modal.</p>
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        </div>
+		      </div>
+		      
+		    </div>
+		  </div>
+		
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<span class="copyright">© Votekin 2018. All rights
+							reserved.</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="side-panel" th:fragment="side-panel">
+		<h4 class="panel-title">Agreement Setting</h4>
+		<form method="post">
+			<div class="setting-row">
+				<span>only positive</span> <input type="checkbox" id="switch11" />
+				<label for="switch11" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+			<div class="setting-row">
+				<span>only negative</span> <input type="checkbox" id="switch22" />
+				<label for="switch22" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+			<div class="setting-row">
+				<span>only interesting</span> <input type="checkbox" id="switch33" />
+				<label for="switch33" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+		</form>
+		<h4 class="panel-title">Social climate Setting</h4>
+		<form method="post">
+			<div class="setting-row">
+				<span>Only Populist</span> <input type="checkbox" id="switch44" />
+				<label for="switch44" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+			<div class="setting-row">
+				<span>Only Troll</span> <input type="checkbox" id="switch55" /> <label
+					for="switch55" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+			<div class="setting-row">
+				<span>Only Violence</span> <input type="checkbox" id="switch66" />
+				<label for="switch66" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+		</form>
+	</div>
+	
+	<!-- side panel -->
+	<div th:fragment="scriptero" th:remove="tag">
+		<script th:src="@{/js/main.min.js}"></script>
+		<script th:src="@{/js/script.js}"></script>
+		<script th:src="@{/js/voto.js}"></script>
+		<script th:src="@{/js/selectize.js}"></script>
+		<script th:src="@{/js/jquery-ui.min.js}"></script>
+		<script
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnV--fRsz_hFOEJcN8AxCcuLJobdupx-Q&libraries=places"></script>
+		<script th:src="@{/js/location.js}"></script>
+		<script th:src="@{/js/autocomplete.js}"></script>
+
+	</div>
+
+
+</body>
+
+</html>

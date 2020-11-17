@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<div class="main-body">
+		<header th:replace="layout/layout :: responsive-header"> </header>
+		<div id="alert-msg" th:replace="layout/layout :: messages"></div>
+		<section class="home-page">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-sm-3 left-side">
+						<aside th:replace="plantillas :: aside_fragment"></aside>
+					</div>
+					
+					<div class="col-sm-6 center-side">
+						<div class="middle-content home wow bounceIn">
+							
+							<!-- New Post Start -->		
+							<div class="friend-info debate-info">
+			                  <div class="user-reponse">
+			                    <div class="user-msg-send">
+			                      <img th:if="${#authentication.principal.ciudadano == null}"
+					src="/images/resources/admin2.jpg" alt=""> <img
+					th:if="${#authentication.principal.ciudadano != null && #authentication.principal.ciudadano.fotoAvatarMedium != null}"
+					th:src="@{'/users/uploads/' + ${#authentication.principal.ciudadano.fotoAvatarMedium}}" />
+			                      <div id="recent-post-init-model" class="recent-post-design form-control active-input" data-toggle="modal"
+							data-target="#add-post">What is in your mind?</div>
+			                    </div>
+			                  </div>
+			                </div>
+							
+							<!-- New Post end -->
+							
+							<!-- Post start -->
+							
+							<!-- add post new box -->
+									<div class="loadMore" id="loadMoreDiv">
+
+
+										<!-- recentposts.js -->
+										
+										
+										
+									</div>
+							
+									
+							
+						</div>
+						
+						<button class="btn-view btn-load-more">Load More</button>
+						
+					</div>
+
+					
+
+					<div class="col-sm-3 right-side">
+						<aside class="sidebar static wow bounceInRight" th:replace="plantillas :: aside_right_fragment"></aside>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<!-- search popup -->
+
+	<div class="modal fade" id="search" role="dialog" th:replace="plantillas :: search_dialog"></div>
+
+	<!-- ADD NEW POST POPUP -->
+
+	<div class="modal fade" id="add-post" role="dialog" th:replace="plantillas :: new_post_dialog"></div>
+	
+	
+
+	<div th:replace="layout/layout :: scriptero"></div>
+	
+	<!-- <script th:src="@{/js/newpost.js}"></script> -->
+	
+	<script th:inline="javascript">
+		var page = "recentpost"
+		
+	</script>
+	
+	
+	<script th:src="@{/js/recentposts.js}"></script>
+	
+	<script type="text/javascript">
+		initialize_Location(function(loc) {
+
+			newpost.selectlocation(loc);
+		});
+	</script>
+	
+</body>
+</html>

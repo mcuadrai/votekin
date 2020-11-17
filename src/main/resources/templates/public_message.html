@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<div class="theme-layout">
+		<div th:replace="layout/layout :: responsive-header"></div>
+				
+        <div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
+		<div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+		<div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
+		<div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
+
+		<!-- Hello, Home! -->
+
+
+	</div>
+	<div th:replace="layout/layout :: scriptero" ></div>
+</body>
+</html>

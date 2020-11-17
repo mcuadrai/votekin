@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<div class="theme-layout">
+		<div th:replace="layout/layout :: responsive-header"></div>
+		<div th:replace="layout/layout :: topbar-stick"></div>
+
+		<section>
+			<div class="gap gray-bg">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="row" id="page-contents">
+								<div class="col-lg-3">
+									<aside class="sidebar static"></aside>
+								</div>
+
+								<div class="col-lg-6">
+									<div class="central-meta">
+										<div class="editing-info">
+											<h5 class="f-title">
+												<i class="ti-lock"></i>Profile
+											</h5>
+											
+											<div class="card-body">
+												<dl class="dl-horizontal">
+													<dt>Name</dt>
+													<dd th:inline='text'>[[${user.name}]]
+													</dd>
+													<dt>Email</dt>
+													<dd th:text="${user.email}">
+													</dd>
+													<dt>Roles</dt>
+													
+													<th:block th:each="role : ${user.roles}">
+													
+														<dd th:text="${role.authority}">
+														</dd>
+													
+													</th:block>
+												</dl>
+											</div>
+
+											<div class="card-footer" th:if="${user.editable}">
+												<a class="btn btn-link" th:href="@{/users/}+${user.id}+@{/edit}">Edit</a>
+												<a class="btn btn-link"
+													th:href="@{/users/}+${user.id}+@{/change-password}">Change password</a> <a class="btn btn-link"
+													th:href="@{/users/}+${user.id}+@{/change-email}">Change email</a>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<!-- centerl meta -->
+
+								<div class="col-lg-3">
+									<aside class="sidebar static"></aside>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div th:replace="layout/layout :: bottombar"></div>
+	</div>
+	<div th:replace="layout/layout :: side-panel"></div>
+	<div th:replace="layout/layout :: scriptero"></div>
+</body>
+</html>

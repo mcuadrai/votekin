@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<div class="main-body">
+		<header th:replace="layout/layout :: responsive-header"> </header>
+		<div id="alert-msg" th:replace="layout/layout :: messages"></div>
+		<section class="home-page">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-sm-3 left-side">
+						<aside th:replace="plantillas :: aside_fragment"></aside>
+					</div>
+
+					<div class="col-sm-6 center-side">
+						<div class="middle-content home wow bounceIn">
+
+							<!-- New Post Start -->
+							<div class="friend-info debate-info">
+								<div class="user-reponse">
+									<form id="search-form" method="get"
+										action="/opinion/findComments">
+										<div class="modal-header">
+											
+											<h4 class="modal-title">Search</h4>
+										</div>
+										<div class="modal-body">
+
+											<div class="new-postbox">
+												<div class="attachments header-search">
+													<div class="row">
+														<div class="col-sm-12 form-group">
+															<input type="text" id="search-text" name="text"
+																class="form-control" placeholder="Search..">
+														</div>
+														
+														<!-- Theams -->
+														
+														<div class="col-sm-6 form-group search-popup">
+															<div class="search-box" id="cat-search-result">
+																
+															</div>
+															<div class="geo-query-location">
+																<!-- <input class="GeoSearch-queryInput form-control" name="theams" type="text" placeholder="Search for a category" aria-expanded="true" id="category-search"> -->
+																<input class="GeoSearch-queryInput" type="text" autocomplete="false"  id="cat-search-text"
+																	placeholder="Search for category"
+																	aria-expanded="true"> <span
+																	class="Icon Icon--search"></span>
+																	<span class="dropdown-container dropdown-menu dropdown-menu-custom"
+																id="cat-search-result-block"
+																style="display: inline-block;">
+																<div class="dropdown-caret">
+																	<span class="caret-outer"></span> <span
+																		class="caret-inner"></span>
+																</div>
+
+																<ul class="GeoSearch-dropdownMenu" role="listbox"
+																	 id="cat-search-result-dropdown">
+																	
+																	<li class="dropdown-link recent-post-cat-list list-hide cat-search-opt"
+																		th:each="theme : ${findAllThemes}" th:data-id="${theme.id}"
+																		th:text="${theme.name}"></li> 
+																	
+																</ul>
+															</span>
+															</div>
+															
+														</div>
+
+														<!-- Theams End -->
+														<!-- Tags -->
+														
+														<div class="col-sm-6 form-group search-popup">
+															<div class="search-box"  id="tag-search-result">
+																
+															</div>
+															<div class="geo-query-location">
+																<!-- <input class="GeoSearch-queryInput form-control" type="text" placeholder="Search for a tag" aria-expanded="true" id="tag-search" name="tags"> -->
+																<input class="GeoSearch-queryInput" type="text" autocomplete="false"  id="tag-search-text"
+																	placeholder="Search for tags"
+																	aria-expanded="true"> <span
+																	class="Icon Icon--search"></span>
+																	<span class="dropdown-container dropdown-menu dropdown-menu-custom"
+																id="tag-search-result-block" style="display: inline-block;">
+																<div class="dropdown-caret">
+																	<span class="caret-outer"></span> <span
+																		class="caret-inner"></span>
+																</div>
+
+																<ul class="GeoSearch-dropdownMenu" role="listbox"
+																	id="tag-search-result-dropdown">
+																</ul>
+															</span>
+															</div>
+															
+														</div>
+														<div class="col-sm-6 header-search-climate">
+															<h6>Agreements</h6>
+															<p>
+																<input type="checkbox" name="choiceId" id="searchChk-1"
+																	value="1"> <label for="searchChk-1"> </label> <small>positive</small>
+															</p>
+															<p>
+																<input type="checkbox" name="choiceId" id="searchChk-2"
+																	value="2"> <label for="searchChk-2"> </label> <small>Negative</small>
+															</p>
+															<p>
+																<input type="checkbox" name="choiceId" id="searchChk-3"
+																	value="3"> <label for="searchChk-3"> </label> <small>Interesting</small>
+															</p>
+														</div>
+														<div class="col-sm-6 header-search-climate">
+															<h6>Social Climate</h6>
+															<p>
+																<input type="checkbox" name="choiceId" value="9"
+																	id="searchChk-9"> <label for="searchChk-9">
+																</label> <small>Populist</small>
+															</p>
+															<p>
+																<input type="checkbox" name="choiceId" id="searchChk-11"
+																	value="11"> <label for="searchChk-11">
+																</label> <small>Annoying</small>
+															</p>
+															<p>
+																<input type="checkbox" id="searchChk-12" name="choiceId"
+																	value="12"> <label for="searchChk-12">
+																</label> <small>Violent</small>
+															</p>
+														</div>
+														<div class="col-sm-12 text-right">
+															<button type="submit" class="btn-post">Find</button>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</form>
+								</div>
+							</div>
+
+							<!-- New Post end -->
+
+							<!-- Post start -->
+
+							<!-- add post new box -->
+							<div class="loadMore" id="loadMoreDiv">
+
+
+								<!-- recentposts.js -->
+
+
+
+							</div>
+
+
+
+						</div>
+						<button class="btn-view btn-load-more">Load More</button>
+					</div>
+
+
+
+					<div class="col-sm-3 right-side">
+						<aside class="sidebar static wow bounceInRight"
+							th:replace="plantillas :: aside_right_fragment"></aside>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<!-- search popup -->
+
+	<div class="modal fade" id="search" role="dialog"
+		th:replace="plantillas :: search_dialog"></div>
+
+	<!-- ADD NEW POST POPUP -->
+
+	<div class="modal fade" id="add-post" role="dialog"
+		th:replace="plantillas :: new_post_dialog"></div>
+
+
+
+	<div th:replace="layout/layout :: scriptero"></div>
+
+	<!-- <script th:src="@{/js/newpost.js}"></script> -->
+
+	<script th:inline="javascript">
+		var page = "findComments"
+	</script>
+
+
+	<script th:src="@{/js/search-dropdown.js}"></script>
+	<script th:src="@{/js/recentposts.js}"></script>
+	
+	<script>
+	
+		$(document).ready(function(){
+			
+		});
+	
+	</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<div class="theme-layout">
+		<div th:replace="layout/layout :: responsive-header"></div>
+		<div th:replace="layout/layout :: topbar-stick"></div>
+
+	<section>
+			<div class="gap gray-bg">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="row" id="page-contents">
+								<div class="col-lg-3">
+									<aside class="sidebar static"></aside>
+								</div>
+
+								<div class="col-lg-6">
+
+									<div class="central-meta-dark">
+										<div class="new-postbox">
+											<div class="newpst-input">
+												<form method="post" th:action="@{/opinion}" th:object="${opinion}" enctype="multipart/form-data">
+													<textarea rows="2" cols="75" maxlength="150"
+														placeholder="*write your politic problem **write social need ***write your social question  " th:field="*{text}" autofocus
+														required="required"></textarea>
+													<small class="form-text text-danger" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></small>
+
+													<div class="attachments">
+														<ul>
+															<li><i class="fa fa-video-camera"></i> <label class="fileContainer"> <input type="file" name="videoFile">
+															</label></li>
+															<li><i class="fa fa-camera"></i> <label class="fileContainer"> <input type="file" name="imageFile">
+															</label></li>
+
+															<li>
+																<div class="form-group" align="left">
+																	<span>Category: </span> <select th:field="*{themes}" required="required">
+																		<option style="align: left" th:each="theme : ${opinion.themes_list}" th:value="${theme.id}" th:text="${theme.name}"></option>
+																	</select> <small class="form-text text-danger" th:if="${#fields.hasErrors('themes')}" th:errors="*{themes}"></small>
+																</div>
+															</li>
+															<li>
+																<button type="submit">Post</button>
+															</li>
+														</ul>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+							<!-- centerl meta -->
+							<div class="col-lg-3">
+								<aside class="sidebar static"></aside>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<form>
+            <div class="form-group">
+              <label for="select-7">Regular</label>
+              <select class="form-control selectize-multiple" id="select-7" multiple>
+                <option value="Red" selected>Red</option>
+                <option value="Green" selected>Green</option>
+              </select>
+            </div>
+            </form>
+	</section>
+
+    
+
+	<div th:replace="layout/layout :: bottombar"></div>
+	</div>
+	<div th:replace="layout/layout :: side-panel"></div>
+	<div th:replace="layout/layout :: scriptero"></div>
+	<script>
+	var REGEX_EMAIL = '([a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)';
+    $('.selectize-single').selectize({sortField: 'text'});
+    $('.selectize-multiple').selectize({
+        delimiter: ',',
+        persist: false,
+        create: function (input) {
+           return {value: input, text: input};
+        }
+    });
+    $('.selectize-custom').selectize({
+        persist: false,
+        maxItems: null,
+        valueField: 'email',
+        labelField: 'name',
+        searchField: ['name', 'email'],
+        options: [
+            {email: 'brian@thirdroute.com', name: 'Brian Reavis'},
+            {email: 'nikola@tesla.com', name: 'Nikola Tesla'},
+            {email: 'someone@gmail.com'}
+        ],
+        render: {
+            item: function (item, escape) {
+                return '<div class="item">'
+                    + (item.name ? '<span class="name">' + escape(item.name) + '</span>' : '')
+                    + (item.email ? ' <span class="email">&lt;' + escape(item.email) + '&gt;</span>' : '')
+                    + '</div>';
+            },
+            option: function (item, escape) {
+                var label = item.name || item.email;
+                var caption = item.name ? item.email : null;
+                return '<div class="option">'
+                    + '<span class="label">' + escape(label) + '</span>'
+                    + (caption ? '<small class="caption" style="display:block">' + escape(caption) + '</small>' : '')
+                    + '</div>';
+            }
+        },
+        createFilter: function (input) {
+            var match, regex;
+            regex = new RegExp('^' + REGEX_EMAIL + '$', 'i');
+            match = input.match(regex);
+            if (match) {
+                return !this.options.hasOwnProperty(match[0]);
+            }
+            regex = new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i');
+            match = input.match(regex);
+            if (match) {
+                return !this.options.hasOwnProperty(match[2]);
+            }
+            return false;
+        },
+        create: function (input) {
+            if ((new RegExp('^' + REGEX_EMAIL + '$', 'i')).test(input)) {
+                return {email: input};
+            }
+            var match = input.match(new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i'));
+            if (match) {
+                return {email: match[2], name: $.trim(match[1])};
+            }
+            alert('Invalid email address.');
+            return false;
+        }
+    });
+	</script>
+</body>
+</html>
+
+
+
+

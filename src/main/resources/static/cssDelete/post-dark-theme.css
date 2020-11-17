@@ -1,0 +1,26 @@
+.central-meta-dark {
+    background: #424242 none repeat scroll 0 0;
+    border-color: transparent;
+    border: 1px solid #ede9e9;
+    border-radius: 3px;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 25px;
+}
+
+
+.attachments {
+    background: #393939 none repeat scroll 0 0;
+    border: medium none transparent;
+}
+
+.post-comt-box form textarea {
+    background: #393939 none repeat scroll 0 0;
+    color: #eee;
+}
+.form-group .mtrl-select {
+    border-color: #535353;
+}
+
+

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+	<!-- Aside left -->
+
+	<aside class="sidebar static wow bounceInLeft"
+		th:fragment="aside_fragment">
+		<div class="widget">
+			<div class="DashboardProfileCard">
+				<img th:if="${#authentication.principal.ciudadano == null}"
+					th:src="@{/images/resources/admin.jpg}" alt="" /> <img
+					th:if="${#authentication.principal.ciudadano != null && #authentication.principal.ciudadano.fotoAvatarMedium != null}"
+					th:src="@{'/users/uploads/' + ${#authentication.principal.ciudadano.fotoAvatarMedium}}" />
+				<!-- <input type="file" class="upload-profile-photo image-selector" name="file"> -->
+			</div>
+			<p class="user-profile-name"
+				th:text="${#authentication.principal.name}">Alex Marin</p>
+			<p class="user-name"
+				th:text="${#authentication.principal.accountName}">@alexmaring38</p>
+			<div class="profilecardposts">
+				<a class="ProfileCardStats" href="javascript:;"> <span
+					class="ProfileCardStats-statLabel">Debates</span> <span
+					class="ProfileCardStats-statValue">20</span>
+				</a> <a class="ProfileCardStats" href="javascript:;"> <span
+					class="ProfileCardStats-statLabel">Recent Posts</span> <span
+					class="ProfileCardStats-statValue">200</span>
+				</a>
+			</div>
+		</div>
+		<div class="widget">
+			<h4 class="widget-title"
+				th:text="#{text.menu.section.agreement.title}">Agreements</h4>
+			<ul class="naves">
+				<li><img th:src="@{/images/positive_green.png}" alt="" /> <a
+					th:href="@{/opinion/recentposts?choiceId=1}" title=""
+					th:text="#{text.menu.agreement.positive}">More positive</a></li>
+				<li><img th:src="@{/images/negative_red.png}" alt="" /> <a
+					th:href="@{/opinion/recentposts?choiceId=2}" title=""
+					th:text="#{text.menu.agreement.negative}">More negative</a></li>
+				<li><img th:src="@{/images/Interesting_yellow.png}" alt="" />
+					<a th:href="@{/opinion/recentposts?choiceId=3}" title=""
+					th:text="#{text.menu.agreement.interesting}">More interesting</a></li>
+			</ul>
+		</div>
+		<div class="widget">
+			<h4 class="widget-title">Social Climate</h4>
+			<ul class="naves">
+				<li><img src="/images/populists.png" alt="" title="populist">
+					<a href="/opinion/recentposts?choiceId=9" title="">More
+						populists</a></li>
+				<li><img src="/images/annoying.png" alt="" title="annoying">
+					<a href="/opinion/recentposts?choiceId=11" title="">More
+						annoying</a></li>
+				<li><img src="/images/violent.png" alt="" title="violent">
+					<a href="/opinion/recentposts?choiceId=12" title="">More
+						violent</a></li>
+			</ul>
+		</div>
+		<div class="widget mobile-icon mobile-filter">
+			<h4 class="widget-title">
+				Categories <span><button
+						style="padding: 0 6px; background-color: transparent;"
+						class="btn float-right" onclick="deleteAllTheme()">
+						<i style="font-size: 22px; color: #8a8a8a;"
+							class="fa fa-times-circle" aria-hidden="true"></i>
+					</button></span>
+			</h4>
+
+			<div id="filter-cat-list-div-mob"
+						class="filter-items filter-cat-list-div" style="display: block">
+						<!-- <select required="required" class="form-control"
+							id="filter-cat-list">
+							<option value="">Select Theme</option>
+							<option style="align: left" th:each="theme : ${findAllThemes}"
+								th:value="'{&quot;id&quot;:'+${theme.id}+',&quot;name&quot;:&quot;'+${theme.name}+'&quot;}'"
+								th:text="${theme.name}"></option>
+						</select> -->
+						<div class="geo-query-location">
+							<input class="GeoSearch-queryInput" type="text" placeholder="Search for a category" aria-expanded="true" id="filter-cat-list-text-mob">
+							<span class="Icon Icon--search"></span>
+						</div>
+						<span class="dropdown-container dropdown-menu recent-post-items" id="filter-cat-list-span-mob" style="display: none;">
+								<div class="dropdown-caret">
+									<span class="caret-outer"></span> <span class="caret-inner"></span>
+								</div>
+								
+
+								<ul class="GeoSearch-dropdownMenu" role="listbox" id="filter-cat-list-ul-mob">
+									
+									
+									<li class="dropdown-link recent-post-cat-list filter-cat-list-li"
+											th:each="theme : ${findAllThemes}" th:data-val="'{&quot;id&quot;:'+${theme.id}+',&quot;name&quot;:&quot;'+${theme.name}+'&quot;}'"
+											th:text="${theme.name}"></li>
+									
+									
+								</ul>
+
+								</span>
+					</div>
+
+			<ul class="naves filter-cat">
+
+
+			</ul>
+		</div>
+		<div class="widget mobile-icon">
+			<h4 class="widget-title">CITIZENS RANKINGS</h4>
+			<ul class="naves">
+				<li><a
+					href="/opinion/recentposts?choiceId=9" title="">With Agreements</a></li>
+				<li><a
+					href="/opinion/recentposts?choiceId=11" title="">Social Climate</a></li>
+			</ul>
+		</div>
+		<div class="widget">
+			<h4 class="widget-title">Filter Comments</h4>
+			<ul class="naves seeonly">
+
+				<li>
+					<h6>See Only</h6>
+					<div>
+						<label class="switch"> <input type="checkbox"
+							class="filter-switch" id="onPositive" name="seeonly[]" value="1">
+							<span class="slider round"></span>
+						</label> <a href="javascript:;" title="">Positive</a>
+					</div>
+					<div>
+						<label class="switch"> <input type="checkbox"
+							class="filter-switch" id="onNegative" name="seeonly[]" value="2">
+							<span class="slider round"></span>
+						</label> <a href="javascript:;" title="">Negative</a>
+					</div>
+					<div>
+						<label class="switch"> <input type="checkbox"
+							class="filter-switch" id="onInteresting" name="seeonly[]"
+							value="3"> <span class="slider round"></span>
+						</label> <a href="javascript:;" title="">Interesting</a>
+					</div>
+				</li>
+
+				<li>
+					<h6>See Only</h6>
+					<div>
+						<label class="switch"> <input type="checkbox"
+							class="filter-switch" id="onPopulist" name="seeonly[]" value="9">
+							<span class="slider round"></span>
+						</label> <a href="javascript:;" title="">populist</a>
+					</div>
+					<div>
+						<label class="switch"> <input type="checkbox"
+							class="filter-switch" id="onAnnoying" name="seeonly[]" value="11">
+							<span class="slider round"></span>
+						</label> <a href="javascript:;" title="">Annoying</a>
+					</div>
+					<div>
+						<label class="switch"> <input type="checkbox"
+							class="filter-switch" id="onViolent" name="seeonly[]" value="12">
+							<span class="slider round"></span>
+						</label> <a href="javascript:;" title="">Violent</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="mobile-icon">
+			<a href="javascript:;" class="left-icon" id="sidemenu-btnmenutoggle">
+				<i class="fa fa-angle-right"></i>
+			</a>
+		</div>
+
+		<script th:inline="javascript">
+			var filters = /*[[${#authentication.principal.filters}]]*/"";
+			var themeFilters = /*[[${#authentication.principal.themeFilters}]]*/"";
+			var filterArr = [];
+			if (filters != null) {
+				filterArr = filters.split(',')
+			}
+		</script>
+
+	</aside>
+
+	<!-- Aside Right -->
+
+	<aside class="sidebar static wow bounceInRight"
+		th:fragment="aside_right_fragment">
+		<div class="widget">
+			<h4 class="widget-title">
+				Categories <span><button
+						style="padding: 0 6px; background-color: transparent;"
+						class="btn float-right" onclick="deleteAllTheme()">
+						<i style="font-size: 22px; color: #8a8a8a;"
+							class="fa fa-times-circle" aria-hidden="true"></i>
+					</button></span>
+			</h4>
+
+			<div id="filter-cat-list-div"
+						class="filter-items filter-cat-list-div" style="display: block">
+						<!-- <select required="required" class="form-control"
+							id="filter-cat-list">
+							<option value="">Select Theme</option>
+							<option style="align: left" th:each="theme : ${findAllThemes}"
+								th:value="'{&quot;id&quot;:'+${theme.id}+',&quot;name&quot;:&quot;'+${theme.name}+'&quot;}'"
+								th:text="${theme.name}"></option>
+						</select> -->
+						<div class="geo-query-location">
+							<input class="GeoSearch-queryInput" type="text" placeholder="Search for a category" aria-expanded="true" id="filter-cat-list-text">
+							<span class="Icon Icon--search"></span>
+						</div>
+						<span class="dropdown-container dropdown-menu recent-post-items" id="filter-cat-list-span" style="display: none;">
+								<div class="dropdown-caret">
+									<span class="caret-outer"></span> <span class="caret-inner"></span>
+								</div>
+								
+
+								<ul class="GeoSearch-dropdownMenu" role="listbox" id="filter-cat-list-ul">
+									
+									
+									<li class="dropdown-link recent-post-cat-list filter-cat-list-li"
+											th:each="theme : ${findAllThemes}" th:data-val="'{&quot;id&quot;:'+${theme.id}+',&quot;name&quot;:&quot;'+${theme.name}+'&quot;}'"
+											th:text="${theme.name}"></li>
+									
+									
+								</ul>
+
+								</span>
+					</div>
+
+			<ul class="naves filter-cat">
+
+
+			</ul>
+		</div>
+		<div class="widget">
+			<h4 class="widget-title">CITIZENS RANKINGS</h4>
+
+			<ul class="naves">
+				<li><a
+					href="javascript:;" title=""
+					th:href="@{/opinion/recentposts?choiceId=1&choiceId=2&choiceId=3}">With
+						Agreements</a></li>
+				<li><a
+					href="javascript:;" title=""
+					th:href="@{/opinion/recentposts?choiceId=9&choiceId=11&choiceId=12}">Social
+						Climate</a></li>
+			</ul>
+
+		</div>
+		<div class="widget post">
+			<h4 class="widget-title">Posts</h4>
+			<h6 class="widget-sub-title">My Posts</h6>
+			<ul class="naves" id="aside-mypost">
+				
+				
+			</ul>
+			<div class="see-more">
+				<a href="JavaScript:;">See More <img
+					src="/images/down_arrow.png" alt=""></a>
+			</div>
+		</div>
+		<div class="widget post">
+			<h4 class="widget-title">Recent Posts</h4>
+			<ul class="naves"  id="aside-recentpost">
+				
+			</ul>
+			<div class="see-more">
+				<a href="/opinion/recentposts">See More <img
+					src="/images/down_arrow.png" alt=""></a>
+			</div>
+		</div>
+	</aside>
+
+	<!-- New Post  -->
+
+	<div class="friend-info debate-info" th:fragment="new_post">
+		<div class="user-reponse">
+			<div class="user-msg-send">
+				<img th:if="${#authentication.principal.ciudadano == null}"
+					src="/images/resources/admin2.jpg" alt=""> <img
+					th:if="${#authentication.principal.ciudadano != null && #authentication.principal.ciudadano.fotoAvatarMedium != null}"
+					th:src="@{'/users/uploads/' + ${#authentication.principal.ciudadano.fotoAvatarMedium}}" />
+
+				<div id="recent-post-init"
+					class="recent-post-design form-control active-input">What is in your mind?</div>
+
+				<!-- <input type="text" class="form-control active-input"
+					placeholder="Post a comment" onclick="mypost()"> -->
+
+				<form id="recent-post-after" method="post"
+					th:action="@{/opinion/createOpinionAndFindAll}"
+					th:object="${opinion}" enctype="multipart/form-data"
+					style="display: none">
+					<div class="recent-post-design">
+
+					<textarea id="add-post-text" rows="1" cols="75" maxlength="150"
+						placeholder="*write your politic problem **write social need ***write your social question  "
+						th:field="*{text}" autofocus required="required"
+						style="overflow-y: hidden;"></textarea>
+					<small id="word_left" class="form-text text-danger"></small> <small
+						class="form-text text-danger" th:if="${#fields.hasErrors('text')}"
+						th:errors="*{text}"></small>
+
+					<div class="recent-post-data">
+						<div id="recent-post-location" class="recent-post-categories"
+							style="display: none">
+							<span><i class="fa fa-map-marker" title="Add Location"
+								aria-hidden="true"></i></span> <span id="recent-post-location-text"
+								class=""></span>
+						</div>
+						<div id="recent-post-tag" class="recent-post-categories"
+							style="display: none">
+							<span><i class="fa fa-tags" title="tags"
+								aria-hidden="true"></i></span>
+							<ul id="recent-post-tag-text" class=""></ul>
+						</div>
+						<div id="recent-post-cat" class="recent-post-categories"
+							style="display: none">
+							<span><i class="fa fa-th-large" title="tags"
+								aria-hidden="true"></i></span> <span id="recent-post-cat-text" class=""></span>
+						</div>
+						<figure id="recent-post-img" class="userdash-profilepic"
+							style="display: none">
+							<img src="https://dummyimage.com/300.png/09f/fff"
+								alt="image description" id="recent-post-img-item">
+							<i class="fa fa-times-circle" aria-hidden="true"
+								id="recent-post-img-del"></i>
+						</figure>
+					</div>
+					</div>
+					<div class="post-project" id="post-project"
+						style="display: inline-block;">
+						<div class="post-detail">
+							<div class="post-details">
+
+								<img th:src="@{/images/img.png}" alt="" /> <input type="file"
+									id="recent-post-file" class="upload-profile" th:field="*{file}">
+							</div>
+							<div class="post-details">
+
+								<img th:src="@{/images/menu.png}" title="Add category" alt=""
+									id="recent-post-cat-icon" /> <span
+									class="dropdown-container dropdown-menu recent-post-items"
+									id="recent-post-cat-list-div">
+									<div class="dropdown-caret">
+										<span class="caret-outer"></span> <span class="caret-inner"></span>
+									</div>
+									<div class="geo-query-location">
+										<input class="GeoSearch-queryInput" type="text"
+											placeholder="Search for a category" aria-expanded="true" id="recent-post-cat-text-newpost">
+										<span class="Icon Icon--search"></span>
+									</div>
+
+									<ul class="GeoSearch-dropdownMenu" role="listbox">
+
+										<li class="dropdown-link recent-post-cat-list-newpost"
+											th:each="theme : ${findAllThemes}" th:data-id="${theme.id}"
+											th:text="${theme.name}"></li>
+
+									</ul>
+
+								</span>
+							</div>
+							<div class="post-details">
+
+								<img src="/images/tag.png" title="tag" alt=""
+									id="recent-post-tag-icon"> <span
+									class="dropdown-container dropdown-menu recent-post-items"
+									id="recent-post-tag-list">
+									<div class="dropdown-caret">
+										<span class="caret-outer"></span> <span class="caret-inner"></span>
+									</div>
+									<div class="geo-query-location">
+										<input class="GeoSearch-queryInput" type="text"
+											placeholder="Search for a tags" aria-expanded="true"
+											id="tags_input_box"> <span class="Icon Icon--search"></span>
+									</div>
+									<ul class="GeoSearch-dropdownMenu" role="listbox"
+										id="tags_input_list">
+
+										<li class="dropdown-link tag_input_option"></li>
+
+
+									</ul>
+								</span>
+							</div>
+							<div class="post-details">
+								<img src="/images/map_pin.png" title="Location" alt=""
+									id="location-icon"> <span
+									class="dropdown-container dropdown-menu recent-post-items"
+									id="location">
+									<div class="dropdown-caret">
+										<span class="caret-outer"></span> <span class="caret-inner"></span>
+									</div>
+									<div class="geo-query-location">
+										<input class="GeoSearch-queryInput address-autocomplete"
+											type="text" placeholder="Search for a city"
+											aria-expanded="true" id="location-select-text"> <span
+											class="Icon Icon--search"></span>
+									</div>  
+									<ul class="GeoSearch-dropdownMenu" role="listbox" id="location-menu">
+										<!-- <li class="dropdown-link">Jaipur Rajasthan</li>
+										<li class="dropdown-link">West Bengal</li>
+										<li class="dropdown-link">Oklahoma City</li>
+										<li class="dropdown-link">New York City</li>
+										<li class="dropdown-link">Boulder City</li> -->
+									</ul>
+								</span>
+							</div>
+							<div class="pull-right">
+								<!-- <a href="#" class="btn-post">post</a> -->
+								<button id="btnSubmit" class="btn-post"
+									onclick="newpost.newPostSubmit(0)">Post</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="add-post" role="dialog"
+		th:fragment="new_post_dialog">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Add New Post</h4>
+				</div>
+				<div class="modal-body">
+					<div class="friend-info debate-info"
+						th:replace="plantillas :: new_post"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="search" role="dialog"
+		th:fragment="search_dialog">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<form id="recent-post-search" method="get"
+					action="/opinion/recentposts">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Search Header</h4>
+					</div>
+					<div class="modal-body">
+
+						<div class="new-postbox">
+							<div class="attachments header-search">
+								<div class="row">
+									<div class="col-sm-12 form-group">
+										<input type="text" id="search-text" name="text"
+											class="form-control" placeholder="Search..">
+									</div>
+									<!-- <div class="col-sm-6 form-group">
+										<select class="form-control">
+											<option value="">Category</option>
+											<option value="">Category</option>
+											<option value="">Category</option>
+											<option value="">Category</option>
+											<option value="">Category</option>
+										</select>
+									</div> -->
+									<div class="col-sm-6 form-group search-popup">
+										<div class="search-box">
+											<span class="badge badge-info">Neha <a href="javascript:;"><i class="fa fa-times-circle" aria-hidden="true"></i></a> </span>
+											<span class="badge badge-info">Neha <a href="javascript:;"><i class="fa fa-times-circle" aria-hidden="true"></i></a> </span>
+											<span class="badge badge-info">Neha <a href="javascript:;"><i class="fa fa-times-circle" aria-hidden="true"></i></a> </span>
+											<span class="badge badge-info">Neha <a href="javascript:;"><i class="fa fa-times-circle" aria-hidden="true"></i></a> </span>
+											<span class="badge badge-info">Neha <a href="javascript:;"><i class="fa fa-times-circle" aria-hidden="true"></i></a> </span>
+											<span class="badge badge-info">Neha <a href="javascript:;"><i class="fa fa-times-circle" aria-hidden="true"></i></a> </span>
+										</div>
+										<div class="geo-query-location">
+			                                <!-- <input class="GeoSearch-queryInput form-control" name="theams" type="text" placeholder="Search for a category" aria-expanded="true" id="category-search"> -->
+			                                <input class="GeoSearch-queryInput" type="text" placeholder="Search for a category" aria-expanded="true">
+			                                <span class="Icon Icon--search"></span>
+			                              </div>
+										<span class="dropdown-container dropdown-menu" id="dropdown-search-category" style="display: inline-block;">
+			                              <div class="dropdown-caret">
+			                                <span class="caret-outer"></span>
+			                                <span class="caret-inner"></span>
+			                              </div>
+			                              
+			                              <ul class="GeoSearch-dropdownMenu" role="listbox" id="dropdown-list-category">
+			                                <li class="dropdown-link search_tag_option">Cat 1</li>
+			                                <li class="dropdown-link search_tag_option">Cat 1</li>
+			                                <li class="dropdown-link search_tag_option">Cat 1</li>
+			                                <li class="dropdown-link search_tag_option">Cat 1</li>
+			                              </ul>
+			                            </span>
+		                            </div>
+											
+									<div class="col-sm-6 form-group search-popup">
+										<div class="search-box">
+											<span class="badge badge-info">Neha <a href="javascript:;"><i class="fa fa-times-circle" aria-hidden="true"></i></a> </span>
+											<span class="badge badge-info">Neha g <a href="javascript:;"><i class="fa fa-times-circle" aria-hidden="true"></i></a> </span>
+											<span class="badge badge-info">Neha dd<a href="javascript:;"><i class="fa fa-times-circle" aria-hidden="true"></i></a> </span>
+											<span class="badge badge-info">Neha gd<a href="javascript:;"><i class="fa fa-times-circle" aria-hidden="true"></i></a> </span>
+											<span class="badge badge-info">Neha gd <a href="javascript:;"><i class="fa fa-times-circle" aria-hidden="true"></i></a> </span>
+											<span class="badge badge-info">Neha<a href="javascript:;"><i class="fa fa-times-circle" aria-hidden="true"></i></a> </span>
+										</div>
+										<div class="geo-query-location">
+			                                <!-- <input class="GeoSearch-queryInput form-control" type="text" placeholder="Search for a tag" aria-expanded="true" id="tag-search" name="tags"> -->
+			                                <input class="GeoSearch-queryInput" type="text" placeholder="Search for a category" aria-expanded="true">
+			                                <span class="Icon Icon--search"></span>
+			                              </div>
+										<span class="dropdown-container dropdown-menu" id="dropdown-search-tag" style="display: inline-block;">
+			                              <div class="dropdown-caret">
+			                                <span class="caret-outer"></span>
+			                                <span class="caret-inner"></span>
+			                              </div>
+			                              
+			                              <ul class="GeoSearch-dropdownMenu" role="listbox" id="dropdown-list-tag">
+			                                <li class="dropdown-link">Tags</li>
+			                                <li class="dropdown-link">Tags</li>
+			                                <li class="dropdown-link">Tags</li>
+			                                <li class="dropdown-link">Tags</li>
+			                                
+			                              </ul>
+			                            </span>
+		                            </div>
+									<div class="col-sm-6 header-search-climate">
+										<h6>Agreements</h6>
+										<p>
+											<input type="checkbox" name="choiceId" id="searchChk-1"
+												value="1"> <label for="searchChk-1"> </label> <small>positive</small>
+										</p>
+										<p>
+											<input type="checkbox" name="choiceId" id="searchChk-2"
+												value="2"> <label for="searchChk-2"> </label> <small>Negative</small>
+										</p>
+										<p>
+											<input type="checkbox" name="choiceId" id="searchChk-3"
+												value="3"> <label for="searchChk-3"> </label> <small>Interesting</small>
+										</p>
+									</div>
+									<div class="col-sm-6 header-search-climate">
+										<h6>Social Climate</h6>
+										<p>
+											<input type="checkbox" name="choiceId" value="9"
+												id="searchChk-9"> <label for="searchChk-9">
+											</label> <small>Populist</small>
+										</p>
+										<p>
+											<input type="checkbox" name="choiceId" id="searchChk-11"
+												value="11"> <label for="searchChk-11"> </label> <small>Annoying</small>
+										</p>
+										<p>
+											<input type="checkbox" id="searchChk-12" name="choiceId"
+												value="12"> <label for="searchChk-12"> </label> <small>Violent</small>
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">Find</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div th:fragment="postResultDiv">
+		<th:block
+			th:each="lista_evaluaciones : ${answer.evaluacionesDeOpinion}">
+
+			<div id="postResultDiv"
+				th:if="${lista_evaluaciones.tipoEvaluacion.id==4}"
+				class="submit-btns aggrement pull-right">
+
+				<th:block th:with="isUser=${false},userName=''"
+					th:each=" opinion_choice : ${lista_evaluaciones.opinionChoices}">
+
+
+					<a
+						th:if="${service.isUserCheckedOnOpinion(opinion_choice,#authentication.principal.id) && lista_evaluaciones.tipoEvaluacion.id==4}"
+						href="javascript:;" th:title="${opinion_choice.choice.name}" 
+						th:class="${opinion_choice.choice.name}+@{'-initial active Opvoto_'}+${opinion_choice.choice.codigoNemotecnico}"
+						th:id="'Opvoto_'+${opinion_choice.choice.codigoNemotecnico}+'_'+${opinion_choice.id}"
+						th:formaction="@{/choice/op/}+${opinion_choice.id}"
+						formmethod="get"> <span th:id="'amount_'+${opinion_choice.id}"
+						th:text=" ${opinion_choice.amount}"></span>
+					</a>
+
+
+					<a
+						th:if="${!service.isUserCheckedOnOpinion(opinion_choice,#authentication.principal.id)  && lista_evaluaciones.tipoEvaluacion.id==4}"
+						href="javascript:;" th:title="${opinion_choice.choice.name}" 
+						th:class="${opinion_choice.choice.name}+@{'-initial Opvoto_'}+${opinion_choice.choice.codigoNemotecnico}"
+						th:id="'Opvoto_'+${opinion_choice.choice.codigoNemotecnico}+'_'+${opinion_choice.id}"
+						th:formaction="@{/choice/op/}+${opinion_choice.id}"
+						formmethod="get"> <span th:id="'amount_'+${opinion_choice.id}"
+						th:text=" ${opinion_choice.amount}"></span>
+					</a>
+
+
+
+					<th:block th:with="isUser=${false}" />
+				</th:block>
+
+
+			</div>
+
+			<div id="postResultDiv"
+				th:if="${lista_evaluaciones.tipoEvaluacion.id==1}"
+				class="submit-btns climet">
+
+
+				<th:block th:with="isUser=${false},userName=''"
+					th:each=" opinion_choice : ${lista_evaluaciones.opinionChoices}">
+
+
+
+					<a
+						th:if="${service.isUserCheckedOnOpinion(opinion_choice,#authentication.principal.id)  && lista_evaluaciones.tipoEvaluacion.id==1}"
+						href="javascript:;" th:title="${opinion_choice.choice.name}" 
+						th:class="${opinion_choice.choice.name}+@{'-initial active social Opvoto_'}+${opinion_choice.choice.codigoNemotecnico}"
+						th:id="'Opvoto_'+${opinion_choice.choice.codigoNemotecnico}+'_'+${opinion_choice.id}"
+						th:formaction="@{/choice/op/}+${opinion_choice.id}"
+						formmethod="get"> <span th:id="'amount_'+${opinion_choice.id}"
+						th:text=" ${opinion_choice.amount}"></span>
+					</a>
+
+
+					<a
+						th:if="${!service.isUserCheckedOnOpinion(opinion_choice,#authentication.principal.id)  && lista_evaluaciones.tipoEvaluacion.id==1}"
+						href="javascript:;" th:title="${opinion_choice.choice.name}" 
+						th:class="${opinion_choice.choice.name}+@{'-initial social Opvoto_'}+${opinion_choice.choice.codigoNemotecnico}"
+						th:id="'Opvoto_'+${opinion_choice.choice.codigoNemotecnico}+'_'+${opinion_choice.id}"
+						th:formaction="@{/choice/op/}+${opinion_choice.id}"
+						formmethod="get"> <span th:id="'amount_'+${opinion_choice.id}"
+						th:text=" ${opinion_choice.amount}"></span>
+					</a>
+
+
+					<th:block th:with="isUser=${false}" />
+				</th:block>
+
+
+			</div>
+
+		</th:block>
+	</div>
+
+
+</body>
+</html>
+
+
+

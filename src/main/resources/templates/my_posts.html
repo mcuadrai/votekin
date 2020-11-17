@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<div class="theme-layout">
+		<div th:replace="layout/layout :: responsive-header"></div>
+		<div th:replace="layout/layout :: topbar-stick"></div>
+
+		<section>
+			<div class="gap gray-bg">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="row" id="page-contents">
+								<div th:replace="plantillas :: results_column"></div>
+								
+								<div class="col-lg-6">
+									<h5 class="f-title" th:text="${title}"><i class="ti-info-alt"></i></h5>
+									<div class="loadMore">
+
+										<div class="central-meta item" th:each="opinion: ${lists}">
+											<div class="user-post">
+												<div class="friend-info">
+													<figure>
+														<img th:if="${opinion.user.ciudadano == null || opinion.user.ciudadano.fotoAvatarDebate == null}"  src="/images/resources/friend-avatar10.jpg" alt="">
+														<img th:if="${opinion.user.ciudadano != null && opinion.user.ciudadano.fotoAvatarDebate != null}" th:src="@{'/users/uploads/' + ${opinion.user.ciudadano.fotoAvatarDebate}}" th:alt="${opinion.user.ciudadano.fotoAvatarDebate}" />
+													</figure>
+													<div class="friend-name">
+														<ins>
+															<a href="time-line.html" title=""
+																th:text="${opinion.user.name}"></a>
+														</ins>
+														<span th:text="'published: '+ ${opinion.creationDate}"></span>
+														<span>   </span>
+                                                        <span th:each="category : ${opinion.themes}"  th:text="'Category: '+${category.name}"></span>
+													</div>
+													<div class="post-meta">
+
+														<div class="description" style="word-wrap: break-word">
+															<p th:text="${opinion.text}" style="color:black"></p>
+															<a th:href="@{/debate/}+${opinion.id}" title="" class="add-butn" data-ripple="">view debate</a>
+														</div>
+														<div th:replace="plantillas :: postResultDiv"></div>
+
+													</div>
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+								<!-- centerl meta -->
+								<div class="col-lg-3">
+								</div>
+								<!-- sidebar -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div th:replace="layout/layout :: bottombar"></div>
+	</div>
+	<div th:replace="layout/layout :: scriptero"></div>
+
+</body>
+
+</html>

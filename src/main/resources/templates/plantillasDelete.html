@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+	<div th:fragment="postResultDiv">
+		<th:block
+			th:each="lista_evaluaciones : ${opinion.evaluacionesDeOpinion}">
+
+			<div id="postResultDiv"
+				th:if="${lista_evaluaciones.tipoEvaluacion.id==4}"
+				class="submit-btns aggrement">
+
+				<th:block th:with="isUser=${false},userName=''"
+					th:each=" opinion_choice : ${lista_evaluaciones.opinionChoices}">
+
+
+					<a
+						th:if="${service.isUserCheckedOnOpinion(opinion_choice,#authentication.principal.id) && lista_evaluaciones.tipoEvaluacion.id==4}"
+						href="javascript:;"
+						th:class="${opinion_choice.choice.name}+@{'-initial active Opvoto_'}+${opinion_choice.choice.codigoNemotecnico}"
+						th:id="'Opvoto_'+${opinion_choice.choice.codigoNemotecnico}+'_'+${opinion_choice.id}"
+						th:formaction="@{/choice/op/}+${opinion_choice.id}"
+						formmethod="get"> <span th:id="'amount_'+${opinion_choice.id}"
+						th:text=" ${opinion_choice.amount}"></span>
+					</a>
+
+
+					<a
+						th:if="${!service.isUserCheckedOnOpinion(opinion_choice,#authentication.principal.id)  && lista_evaluaciones.tipoEvaluacion.id==4}"
+						href="javascript:;"
+						th:class="${opinion_choice.choice.name}+@{'-initial Opvoto_'}+${opinion_choice.choice.codigoNemotecnico}"
+						th:id="'Opvoto_'+${opinion_choice.choice.codigoNemotecnico}+'_'+${opinion_choice.id}"
+						th:formaction="@{/choice/op/}+${opinion_choice.id}"
+						formmethod="get"> <span th:id="'amount_'+${opinion_choice.id}"
+						th:text=" ${opinion_choice.amount}"></span>
+					</a>
+
+
+
+					<th:block th:with="isUser=${false}" />
+				</th:block>
+
+
+			</div>
+
+			<div id="postResultDiv"
+				th:if="${lista_evaluaciones.tipoEvaluacion.id==1}"
+				class="submit-btns climet">
+
+
+				<th:block th:with="isUser=${false},userName=''"
+					th:each=" opinion_choice : ${lista_evaluaciones.opinionChoices}">
+
+
+
+					<a
+						th:if="${service.isUserCheckedOnOpinion(opinion_choice,#authentication.principal.id)  && lista_evaluaciones.tipoEvaluacion.id==1}"
+						href="javascript:;"
+						th:class="${opinion_choice.choice.name}+@{'-initial active social Opvoto_'}+${opinion_choice.choice.codigoNemotecnico}"
+						th:id="'Opvoto_'+${opinion_choice.choice.codigoNemotecnico}+'_'+${opinion_choice.id}"
+						th:formaction="@{/choice/op/}+${opinion_choice.id}"
+						formmethod="get"> <span th:id="'amount_'+${opinion_choice.id}"
+						th:text=" ${opinion_choice.amount}"></span>
+					</a>
+
+
+					<a
+						th:if="${!service.isUserCheckedOnOpinion(opinion_choice,#authentication.principal.id)  && lista_evaluaciones.tipoEvaluacion.id==1}"
+						href="javascript:;"
+						th:class="${opinion_choice.choice.name}+@{'-initial social Opvoto_'}+${opinion_choice.choice.codigoNemotecnico}"
+						th:id="'Opvoto_'+${opinion_choice.choice.codigoNemotecnico}+'_'+${opinion_choice.id}"
+						th:formaction="@{/choice/op/}+${opinion_choice.id}"
+						formmethod="get"> <span th:id="'amount_'+${opinion_choice.id}"
+						th:text=" ${opinion_choice.amount}"></span>
+					</a>
+
+
+					<th:block th:with="isUser=${false}" />
+				</th:block>
+
+
+			</div>
+
+		</th:block>
+	</div>
+
+
+	<div th:fragment="postResultDivDebate" id="postResultDiv"
+		class="submit-btns"
+		th:each="lista_evaluaciones : ${opinion.evaluacionesDeOpinion}">
+		<span th:if="${lista_evaluaciones.tipoEvaluacion.id==1}"
+			class="post-result-points">Agreements</span> <span
+			th:if="${lista_evaluaciones.tipoEvaluacion.id==4}"
+			class="post-result-points">Social Climate</span> <a
+			th:each=" opinion_choice : ${lista_evaluaciones.opinionChoices}"
+			href="javascript:;"
+			th:class="${opinion_choice.choice.name}+@{'-initial'}"
+			th:id="'Opvoto_'+${opinion_choice.choice.codigoNemotecnico}"
+			th:formaction="@{/choice/op/}+${opinion_choice.id}" formmethod="get">
+			<span th:id="'amount_'+${opinion_choice.id}"
+			th:text=" ${opinion_choice.amount}"></span>
+		</a>
+	</div>
+
+
+
+	<div th:fragment="results_column" class="col-lg-3">
+		<aside class="sidebar static">
+			<div class="widget">
+				<div class="DashboardProfileCard">
+					<!-- <img src="/images/resources/upload-profile-photo.png" alt=""> -->
+					<img th:if="${#authentication.principal.ciudadano == null}"
+						th:src="@{/images/resources/admin.jpg}" alt="" /> <img
+						th:if="${#authentication.principal.ciudadano != null && #authentication.principal.ciudadano.fotoAvatarMedium != null}"
+						th:src="@{'/users/uploads/' + ${#authentication.principal.ciudadano.fotoAvatarMedium}}" />
+					<input type="file" class="upload-profile-photo image-selector"
+						name="file">
+				</div>
+				<p class="user-profile-name"
+					th:text="${#authentication.principal.name}">Mario</p>
+					<p class="user-name"
+					th:text="${#authentication.principal.accountName}"></p>
+				<div class="profilecardposts">
+					<a class="ProfileCardStats" href="javascript:;"> <span
+						class="ProfileCardStats-statLabel">Debates</span> <span
+						class="ProfileCardStats-statValue">20</span>
+					</a> <a class="ProfileCardStats" href="javascript:;"> <span
+						class="ProfileCardStats-statLabel">Recent Posts</span> <span
+						class="ProfileCardStats-statValue">200</span>
+					</a>
+				</div>
+			</div>
+			<div class="widget">
+				<h4 class="widget-title"
+					th:text="#{text.menu.section.agreement.title}">Agreements</h4>
+				<ul class="naves">
+					<li><img th:src="@{/images/resources/positivecomment.png}"
+						alt="" /> <a th:href="@{/opinion/recentposts?choiceId=1}"
+						title="" th:text="#{text.menu.agreement.positive}">More
+							positive</a></li>
+					<li><img th:src="@{/images/resources/Negativecomment.png}"
+						alt="" /> <a th:href="@{/opinion/recentposts?choiceId=2}"
+						title="" th:text="#{text.menu.agreement.negative}">More
+							negative</a></li>
+					<li><img th:src="@{/images/resources/interestingcomments.png}"
+						alt="" /> <a th:href="@{/opinion/recentposts?choiceId=3}"
+						title="" th:text="#{text.menu.agreement.interesting}">More
+							interesting</a></li>
+				</ul>
+			</div>
+			<!-- Shortcuts -->
+			<div class="widget">
+				<h4 class="widget-title"
+					th:text="#{text.menu.section.socialclimate.title}">Social
+					Climate</h4>
+				<ul class="naves">
+					<li><img th:src="@{/images/resources/MorePopulists.png}"
+						alt="" /> <a th:href="@{/opinion/recentposts?choiceId=9}"
+						title="" th:text="#{text.menu.socialclimate.populist}">More
+							Populist</a></li>
+					<li><img th:src="@{/images/resources/annoying.png}" alt="" />
+						<a th:href="@{/opinion/recentposts?choiceId=11}" title=""
+						th:text="#{text.menu.socialclimate.bullying}">More Bullying</a></li>
+					<li><img th:src="@{/images/resources/MoreViolent.png}" alt="" />
+						<a th:href="@{/opinion/recentposts?choiceId=12}" title=""
+						th:text="#{text.menu.socialclimate.violence}">More Violence</a></li>
+				</ul>
+			</div>
+			<!-- Shortcuts -->
+
+			<div class="widget">
+				<h4 class="widget-title">Citizens Rankings</h4>
+				<ul class="naves">
+					<li><img th:src="@{/images/resources/agreement.png}" alt="" />
+						<a href="javascript:;" title=""
+						th:href="@{/opinion/recentposts?choiceId=1&choiceId=2&choiceId=3}">With
+							Agreements</a></li>
+					<li><img th:src="@{/images/resources/socialclimate.png}"
+						alt="" /> <a href="javascript:;" title=""
+						th:href="@{/opinion/recentposts?choiceId=9&choiceId=11&choiceId=12}">Social
+							Climate</a></li>
+				</ul>
+			</div>
+			<!-- Shortcuts -->
+			<div class="widget category-height">
+				<h4 class="widget-title">
+					Categories <span><button style="padding: 0 6px; background-color: transparent;" class="btn float-right" onclick="deleteAllTheme()"><i style="font-size: 22px; color: #8a8a8a;" class="fa fa-times-circle" aria-hidden="true"></i></button></span>
+				</h4>
+				
+				<ul class="naves">
+					<li class="filter-cat-edit-li"><div id="filter-cat-list-div" class="filter-items"
+							style="display: block">
+							<select class="recent-post-items" required="required"
+								id="filter-cat-list">
+								<option value="">Select Theme</option>
+								<option style="align: left" th:each="theme : ${findAllThemes}"
+									th:value="'{&quot;id&quot;:'+${theme.id}+',&quot;name&quot;:&quot;'+${theme.name}+'&quot;}'" th:text="${theme.name}"></option>
+							</select>
+						</div></li>
+				</ul>
+
+				<ul class="naves" id="filter-cat">
+					
+				
+				</ul>
+			</div>
+			<!-- Shortcuts -->
+			<div class="widget">
+				<h4 class="widget-title">Filter Comments</h4>
+				<ul class="naves">
+
+					<li>
+						<h6>See Only</h6>
+						<div>
+							<label class="switch"> <input type="checkbox"
+								class="filter-switch" id="onPositive" name="seeonly[]" value="1">
+								<span class="slider round"></span>
+							</label> <a href="javascript:;" title="">Positive</a>
+						</div>
+						<div>
+							<label class="switch"> <input type="checkbox"
+								class="filter-switch" id="onNegative" name="seeonly[]" value="2">
+								<span class="slider round"></span>
+							</label> <a href="javascript:;" title="">Negative</a>
+						</div>
+						<div>
+							<label class="switch"> <input type="checkbox"
+								class="filter-switch" id="onInteresting" name="seeonly[]"
+								value="3"> <span class="slider round"></span>
+							</label> <a href="javascript:;" title="">Interesting</a>
+						</div>
+					</li>
+
+					<li>
+						<h6>See Only</h6>
+						<div>
+							<label class="switch"> <input type="checkbox"
+								class="filter-switch" id="onPopulist" name="seeonly[]" value="9">
+								<span class="slider round"></span>
+							</label> <a href="javascript:;" title="">populist</a>
+						</div>
+						<div>
+							<label class="switch"> <input type="checkbox"
+								class="filter-switch" id="onAnnoying" name="seeonly[]"
+								value="11"> <span class="slider round"></span>
+							</label> <a href="javascript:;" title="">Annoying</a>
+						</div>
+						<div>
+							<label class="switch"> <input type="checkbox"
+								class="filter-switch" id="onViolent" name="seeonly[]" value="12">
+								<span class="slider round"></span>
+							</label> <a href="javascript:;" title="">Violent</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<!-- Shortcuts -->
+
+
+		</aside>
+
+		<script th:inline="javascript">
+			var filters = /*[[${#authentication.principal.filters}]]*/"";
+			var themeFilters = /*[[${#authentication.principal.themeFilters}]]*/"";
+			var filterArr = [];
+			if(filters!=null){
+				filterArr = filters.split(',')
+			}
+			 
+		</script>
+
+	</div>
+
+
+	<div th:fragment="user_left_column" class="col-lg-3">
+		<aside class="sidebar static">
+			<div class="widget stick-widget">
+				<h4 class="widget-title">Edit info</h4>
+				<ul class="naves">
+					<li><i class="ti-info-alt"></i> <a
+						href="edit-profile-basic.html" title="">Basic info</a></li>
+					<li><i class="ti-mouse-alt"></i> <a
+						href="edit-work-eductation.html" title="">Education and Work</a></li>
+					<li><i class="ti-heart"></i> <a href="edit-interest.html"
+						title="">My interests</a></li>
+					<li><i class="ti-settings"></i> <a
+						href="edit-account-setting.html" title="">account setting</a></li>
+					<li><i class="ti-lock"></i> <a href="edit-password.html"
+						title="">change password</a></li>
+				</ul>
+			</div>
+			<!-- settings widget -->
+		</aside>
+	</div>
+
+
+
+	<!-- sidebar -->
+
+	<div th:fragment="new-post" class="central-meta-dark">
+		<div class="new-postbox">
+			<figure>
+				<img th:if="${#authentication.principal.ciudadano == null}"
+					src="/images/resources/admin2.jpg" alt="">
+				<img
+					th:if="${#authentication.principal.ciudadano != null && #authentication.principal.ciudadano.fotoAvatarMedium != null}"
+					th:src="@{'/users/uploads/' + ${#authentication.principal.ciudadano.fotoAvatarMedium}}" />
+
+			</figure>
+			<div class="newpst-input">
+				<div id="recent-post-init" class="recent-post-design">*write
+					your politic problem **write social need ***write your social
+					question</div>
+				<form id="recent-post-after" method="post"
+					th:action="@{/opinion/createOpinionAndFindAll}"
+					th:object="${opinion}" enctype="multipart/form-data"
+					style="display: none">
+					<div class="recent-post-design">
+						<textarea id="add-post-text" rows="1" cols="75" maxlength="150"
+							placeholder="*write your politic problem **write social need ***write your social question  "
+							th:field="*{text}" autofocus required="required"
+							style="overflow-y: hidden;"></textarea>
+						<small id="word_left" class="form-text text-danger"></small>	
+						<small class="form-text text-danger"
+							th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></small>
+						<div class="recent-post-data">
+							<div id="recent-post-location" class="recent-post-categories"
+								style="display: none">
+								<span><i class="fa fa-map-marker" title="Add Location"
+									aria-hidden="true"></i></span> <span id="recent-post-location-text"
+									class=""></span>
+							</div>
+							<div id="recent-post-tag" class="recent-post-categories"
+								style="display: none">
+								<span><i class="fa fa-tags" title="tags"
+									aria-hidden="true"></i></span> <ul id="recent-post-tag-text"
+									class=""></ul>
+							</div>
+							<div id="recent-post-cat" class="recent-post-categories"
+								style="display: none">
+								<span><i class="fa fa-th-large" title="tags"
+									aria-hidden="true"></i></span> <span id="recent-post-cat-text"
+									class=""></span>
+							</div>
+							<figure id="recent-post-img" class="userdash-profilepic"
+								style="display: none">
+								<img src="https://dummyimage.com/300.png/09f/fff"
+									alt="image description" id="recent-post-img-item">
+								<i class="fa fa-times-circle" aria-hidden="true"
+									id="recent-post-img-del"></i>
+							</figure>
+						</div>
+					</div>
+					<div class="attachments">
+						<div class="new-post-data upload-img img-select">
+							<img th:src="@{/images/resources/gallery.png}" alt="" /> <input
+								type="file" id="recent-post-file" class="image-selector"
+								th:field="*{file}">
+						</div>
+						<div class="new-post-data" align="left">
+							<img th:src="@{/images/resources/category.png}"
+								id="recent-post-cat-icon" title="Add Categoty" alt="" />
+							<div id="recent-post-cat-list-div" class="recent-post-items"
+								style="display: none">
+								<select class="recent-post-items" th:field="*{themes}"
+									required="required" id="recent-post-cat-list">
+									<option style="align: left" th:each="theme : ${findAllThemes}"
+										th:value="${theme.id}" th:text="${theme.name}"></option>
+								</select>
+							</div>
+
+							<small class="form-text text-danger"
+								th:if="${#fields.hasErrors('themes')}" th:errors="*{themes}"></small>
+						</div>
+						<div class="new-post-data upload-img">
+							<img th:src="@{/images/resources/tag.png}"
+								id="recent-post-tag-icon" title="Add Tag" alt="" />
+							<!-- <input type="text" value="Amsterdam,Washington" data-role="tagsinput" > -->
+							<div style="width: auto; margin-top: 5px; display: none"
+								id="recent-post-tag-list" class="recent-post-items">
+								<select data-role="tagsinput"
+									class="form-control recent-post-items" id="tags-input">
+									<option value=""></option>
+								</select>
+							</div>
+						</div>
+						<div class="new-post-data upload-img">
+							<img th:src="@{/images/resources/location.png}"
+								id="location-icon" title="Add Location" alt="" /> 
+								<input
+								type="text" style="width: auto; margin-top: 5px; display: none"
+								class="form-control address-autocomplete recent-post-items"
+								name="location" id="location" placeholder="locarion here...">
+						</div>
+						<div class="new-post-data float-right">
+							<!-- <button type="submit">Post</button> -->
+							<button id="btnSubmit" onclick="newpost.newPostSubmit(0)">Post</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div th:fragment="new-answer" class="central-meta-dark">
+		<div class="new-postbox">
+			<figure>
+				<img th:if="${#authentication.principal.ciudadano == null}"
+					src="/images/resources/admin2.jpg" alt="">
+				<img
+					th:if="${#authentication.principal.ciudadano != null && #authentication.principal.ciudadano.fotoAvatarMedium != null}"
+					th:src="@{'/users/uploads/' + ${#authentication.principal.ciudadano.fotoAvatarMedium}}" />
+			</figure>
+			<div class="newpst-input">
+				<div id="recent-post-init" class="recent-post-design">*write
+					your politic problem **write social need ***write your social
+					question</div>
+				<form id="recent-post-after" method="post"
+					th:action="@{/debate/createAnswer}" th:object="${answer}"
+					enctype="multipart/form-data" style="display: none;">
+					<input th:field="*{opinionId}" type="hidden"
+						th:value="${opinionId}" /> <input th:field="*{levelId}"
+						type="hidden" value="0" /> <input th:field="*{originOpinionId}"
+						type="hidden" th:value="${opinionId}" />
+					<div class="recent-post-design">
+						<textarea id="add-post-text" rows="1" cols="75" maxlength="150"
+							placeholder="*write your politic problem **write social need ***write your social question  "
+							th:field="*{text}" autofocus required="required"
+							style="overflow-y: hidden;"></textarea>
+						<small id="word_left" class="form-text text-danger"></small>	
+						<small class="form-text text-danger"
+							th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></small>
+
+						<div class="recent-post-data">
+							<div id="recent-post-location" class="recent-post-categories"
+								style="display: none">
+								<span><i class="fa fa-map-marker" title="Add Location"
+									aria-hidden="true"></i></span> <span id="recent-post-location-text"
+									class=""></span>
+							</div>
+							<div id="recent-post-tag" class="recent-post-categories"
+								style="display: none">
+								<span><i class="fa fa-tags" title="tags"
+									aria-hidden="true"></i></span> <span id="recent-post-tag-text"
+									class=""></span>
+							</div>
+							<div id="recent-post-cat" class="recent-post-categories"
+								style="display: none">
+								<span><i class="fa fa-th-large" title="tags"
+									aria-hidden="true"></i></span> <span id="recent-post-cat-text"
+									class=""></span>
+							</div>
+							<figure id="recent-post-img" class="userdash-profilepic"
+								style="display: none">
+								<img src="https://dummyimage.com/300.png/09f/fff"
+									alt="image description" id="recent-post-img-item">
+								<i class="fa fa-times-circle" aria-hidden="true"
+									id="recent-post-img-del"></i>
+							</figure>
+						</div>
+					</div>
+					
+
+					<div class="attachments">
+						<div class="new-post-data upload-img">
+							<img th:src="@{/images/resources/gallery.png}" alt="" /> <input
+								type="file" id="recent-post-file" class="image-selector"
+								th:field="*{file}">
+						</div>
+						<div class="new-post-data" align="left">
+							<img th:src="@{/images/resources/category.png}"
+								id="recent-post-cat-icon" title="Add Categoty" alt="" />
+							<div id="recent-post-cat-list-div" class="recent-post-items"
+								style="display: none">
+								<select class="recent-post-items" th:field="*{themes}"
+									required="required" id="recent-post-cat-list">
+									<option style="align: left" th:each="theme : ${findAllThemes}"
+										th:value="${theme.id}" th:text="${theme.name}"></option>
+								</select>
+							</div>
+
+							<small class="form-text text-danger"
+								th:if="${#fields.hasErrors('themes')}" th:errors="*{themes}"></small>
+						</div>
+						<div class="new-post-data upload-img">
+							<img th:src="@{/images/resources/tag.png}"
+								id="recent-post-tag-icon" title="Add Tag" alt="" />
+							<!-- <div style="width: auto; margin-top: 5px; display: none"
+								id="recent-post-tag-list" class="recent-post-items">
+								<select multiple data-role="tagsinput"
+									class="form-control recent-post-items" id="tags-input"
+									th:field="*{tags}">
+						
+								</select>
+							</div> -->
+							
+							<div style="width: auto; margin-top: 5px; display: none"
+								id="recent-post-tag-list" class="recent-post-items">
+								<select data-role="tagsinput"
+									class="form-control recent-post-items" id="tags-input">
+									<option value=""></option>
+								</select>
+							</div>
+							
+						</div>
+						<div class="new-post-data upload-img">
+							<img th:src="@{/images/resources/location.png}"
+								id="location-icon" title="Add Location" alt="" /> <input
+								type="text" style="width: auto; margin-top: 5px; display: none"
+								class="form-control address-autocomplete recent-post-items"
+								name="location" id="location" placeholder="locarion here...">
+						</div>
+						<div class="new-post-data float-right">
+							<!-- <button type="submit" >Post</button> -->
+							<button id="btnSubmit" onclick="newpost.newPostSubmit(1)">Post</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			
+		</div>
+	</div>
+	
+	<div th:fragment="find-comments" class="central-meta-dark">
+	<form id="recent-post-search" method="get" action="/opinion/findComments">
+		<div class="new-postbox">
+			
+			<div class="attachments header-search">
+			<div class="row">
+				<div class="col-sm-12 search-input">
+					<input type="text" id="search-text" name="text" class="form-control" placeholder="Search..">
+				</div>
+				
+				<div class="col-sm-6">
+				
+				<img th:src="@{/images/resources/category.png}"  title="Add Categoty" alt="" />
+								<select class="recent-post-items" name="theams"
+									required="required" id="recent-post-cat-list">
+									<option style="align: left" value="All" >All</option>
+									<option style="align: left" th:each="theme : ${findAllThemes}"
+										th:value="${theme.name}" th:text="${theme.name}"></option>
+								</select>
+				</div>
+				
+				<div class="col-sm-6">
+					<div id="recent-post-tag" class="recent-post-categories recent-post-data find-com"
+								style="display: none">
+								<!-- <span><i class="fa fa-tags" title="tags"
+									aria-hidden="true"></i></span> --> <ul id="recent-post-tag-text"
+									class=""></ul>
+							</div>
+					
+					<div style="display: block;">
+					<img th:src="@{/images/resources/tag.png}" title="Add Tag" alt="" />
+								<select data-role="tagsinput" 
+									class="form-control recent-post-items" id="tags-input">
+									<option value=""></option>
+								</select>
+							</div>
+				</div>
+				<div class="col-sm-6 header-search-climate">
+					<h6>Agreements</h6>
+					<input type="checkbox" name="choiceId" id="searchChk-1" value="1">positive<br>
+					<input type="checkbox" name="choiceId" id="searchChk-2" value="2">
+					negative<br> <input type="checkbox" name="choiceId" id="searchChk-3"
+						value="3" > Interesting
+				</div>
+				<div class="col-sm-6 header-search-climate">
+					<h6>Social Climate</h6>
+					<input type="checkbox" name="choiceId" value="9" id="searchChk-9">
+					populist<br> <input type="checkbox" name="choiceId" id="searchChk-11"
+						value="11"> annoying<br> <input type="checkbox" id="searchChk-12"
+						name="choiceId" value="12" > violent
+				</div>
+
+				<div class="new-post-data col-sm-12">
+					<button type="submit">Find</button>
+				</div>
+				</div>
+			</div>
+		</div>
+		</form>
+	</div>
+
+	
+
+
+
+
+</body>
+</html>
+
+
+

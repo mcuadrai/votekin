@@ -1,0 +1,259 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:fragment="head">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Votekin</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<link href="/css/bootstrap-grid.min.css" rel="stylesheet">
+<link href="/css/bootstrap-reboot.min.css" rel="stylesheet">
+<link href="/css/bootstrap-tagsinput.css" rel="stylesheet">
+<link href="/css/font-awesome.min.css" rel="stylesheet">
+<!-- <link href="/css/animate.css" rel="stylesheet"> -->
+<link href="/css/style.css" rel="stylesheet">
+<link href="/css/responsive.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+	<!--<div class="se-pre-con"></div>-->
+	<div class="theme-layout">
+
+		<header th:fragment="responsive-header">
+			<div id="myProgress" style="display:none">
+			  <div id="myBar"></div>
+			  <img src="/images/spinner.gif">
+			</div>
+			<nav class="navbar">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="/opinion/recentposts" title="Home"><img
+							src="/images/logo.png" alt=""><span> Votekin</span></a>
+					</div>
+					<ul class="nav navbar-nav navbar-right">
+						<!-- <li><a href="#" title="Search" data-toggle="modal"
+							data-target="#search"><img src="/images/search.png" alt="">
+								Search</a></li> -->
+								
+						<li><a href="/opinion/findComments" title="Search"><img src="/images/search.png" alt="">
+								Search</a></li>		
+						<li><a href="/opinion/recentposts" title="Home"><img src="/images/home.png"
+								alt=""> Home</a></li>
+						<li><a href="#" title="Notification"><img
+								src="/images/notification.png" alt=""> Notification</a></li>
+						<li><a href="#" title="Language"><img
+								src="/images/language.png" alt=""> Language</a></li>
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#"><img th:if="${#authentication.principal.ciudadano == null}"
+						th:src="@{/images/resources/admin.jpg}" alt="" /> <img
+						th:if="${#authentication.principal.ciudadano != null && #authentication.principal.ciudadano.fotoAvatarSmall != null}"
+						th:src="@{'/users/uploads/' + ${#authentication.principal.ciudadano.fotoAvatarSmall}}" />Me <span class="caret"></span>  </a>  <ul class="dropdown-menu">
+                  <li><span sec:authentication="principal.name"></span></li>
+                  <li><a onclick="document.getElementById('setForm1').submit();"> View Profile</a></li>
+                  
+                  <li><a onclick="document.getElementById('setForm').submit();">Setting and	Privacy</a></li>
+						
+					<li><a href="#" title="">Electoral Data</a></li>
+					<li><a href="/logout">log out</a></li>	
+                </ul> </li>
+						<li><a href="javascript:newpost.openNewPostDialog()" class="btn-post">post</a></li>
+					</ul>
+
+				</div>
+			</nav>
+		</header>
+		
+		
+
+		<div th:fragment="messages" th:remove="tag">
+			<div class="alert alert-success" th:if="${success != null}"
+				th:text="${success}"></div>
+			<div class="alert alert-danger" th:if="${error != null}"
+				th:text="${error}"></div>
+			<div class="alert alert-warning" th:if="${warning != null}"
+				th:text="${warning}"></div>
+			<div class="alert alert-info" th:if="${info != null}"
+				th:text="${info}"></div>
+			<div id="alert-msg" class="alert alert-info" style="display: none"></div>
+
+
+		</div>
+
+		<section>
+			<div class="gap gray-bg">
+				<div class="container-fluid"></div>
+			</div>
+		</section>
+
+		<footer th:fragment="footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-4 col-md-4">
+						<div class="widget">
+							<div class="foot-logo">
+								<div class="logo">
+									<a href="index.html" title=""><img
+										th:src="@{/images/logo.png}" alt=""></a>
+								</div>
+								<p>The power of citizens to find agreements.</p>
+							</div>
+							<ul class="location">
+								<li><i class="ti-map-alt"></i>
+									<p>Mujica</p></li>
+								<li><i class="ti-mobile"></i>
+									<p></p></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="col-lg-2 col-md-4">
+						<div class="widget">
+							<div class="widget-title">
+								<h4>Navigate</h4>
+							</div>
+							<ul class="list-style">
+								<li><a href="about.html" title="">about us</a></li>
+								<li><a href="contact.html" title="">contact us</a></li>
+								<li><a href="terms.html" title="">terms and conditions</a></li>
+								<li><a href="#" title="">RSS syndication</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-2 col-md-4">
+						<div class="widget">
+							<div class="widget-title">
+								<h4>useful links</h4>
+							</div>
+							<ul class="list-style">
+								<li><a href="#" title="">how does it work?</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-2 col-md-4">
+						<div class="widget">
+							<div class="widget-title">
+								<h4>download apps</h4>
+							</div>
+							<ul class="colla-apps">
+								<li><a href="https://play.google.com/store?hl=en" title=""><i
+										class="fa fa-android"></i>android</a></li>
+								<li><a href="https://www.apple.com/lae/ios/app-store/"
+									title=""><i class="ti-apple"></i>iPhone</a></li>
+								<li><a href="https://www.microsoft.com/store/apps" title=""><i
+										class="fa fa-windows"></i>Windows</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<!-- footer -->
+
+		<div class="bottombar" th:fragment="bottombar">
+
+			<div class="modal fade" id="myModal" role="dialog">
+				<div class="modal-dialog">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Modal Header</h4>
+						</div>
+						<div class="modal-body">
+							<p>Some text in the modal.</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Close</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<span class="copyright">© Votekin 2018. All rights
+							reserved.</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="side-panel" th:fragment="side-panel">
+		<h4 class="panel-title">Agreement Setting</h4>
+		<form method="post">
+			<div class="setting-row">
+				<span>only positive</span> <input type="checkbox" id="switch11" />
+				<label for="switch11" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+			<div class="setting-row">
+				<span>only negative</span> <input type="checkbox" id="switch22" />
+				<label for="switch22" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+			<div class="setting-row">
+				<span>only interesting</span> <input type="checkbox" id="switch33" />
+				<label for="switch33" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+		</form>
+		<h4 class="panel-title">Social climate Setting</h4>
+		<form method="post">
+			<div class="setting-row">
+				<span>Only Populist</span> <input type="checkbox" id="switch44" />
+				<label for="switch44" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+			<div class="setting-row">
+				<span>Only Troll</span> <input type="checkbox" id="switch55" /> <label
+					for="switch55" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+			<div class="setting-row">
+				<span>Only Violence</span> <input type="checkbox" id="switch66" />
+				<label for="switch66" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+		</form>
+	</div>
+
+	<!-- side panel -->
+	<div th:fragment="scriptero" th:remove="tag">
+	<link href="https://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			<script src="https://code.jquery.com/jquery-migrate-3.0.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+		
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+			<script th:src="@{/js/bootstrap-tagsinput.min.js}"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+			<script th:src="@{/js/script.js}"></script>
+		<script src="/js/custom.js"></script>
+		<!-- <script src="/js/wow.min.js"></script> -->
+		<script th:src="@{/js/voto.js}"></script>
+		
+		<script>
+		
+		MAP_API_KEY = 'AIzaSyAJuak5Hp1klbIdCw_78Jm5qpiLsWuHHR4'
+		
+		</script>
+		
+		<script
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJuak5Hp1klbIdCw_78Jm5qpiLsWuHHR4&libraries=places"></script>
+		<script th:src="@{/js/location.js}"></script>
+		<script th:src="@{/js/autocomplete.js}"></script>
+		<script th:src="@{/js/newpost.js}"></script>
+		<script th:src="@{/js/mypost.js}"></script>
+
+	</div>
+
+
+</body>
+
+</html>

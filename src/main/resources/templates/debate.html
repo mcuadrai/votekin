@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" >
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<div class="main-body">
+		<header th:replace="layout/layout :: responsive-header"> </header>
+		<div id="alert-msg" th:replace="layout/layout :: messages"></div>
+		<section class="home-page debate-page">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-sm-3 left-side">
+						<aside th:replace="plantillas :: aside_fragment"></aside>
+					</div>
+					<div class="col-sm-6  center-side">
+						<div class="middle-content debatepage wow bounceIn">
+							<div class="friend-info debate-info">
+								<h4 class="debate-heading">DEBATE</h4>
+								<figure>
+									<img
+										th:if="${answer.user.ciudadano == null || answer.user.ciudadano.fotoAvatarDebate == null}"
+										src="/images/resources/friend-avatar10.jpg" alt="">
+									<img
+										th:if="${answer.user.ciudadano != null && answer.user.ciudadano.fotoAvatarDebate != null}"
+										th:src="@{'/users/uploads/' + ${answer.user.ciudadano.fotoAvatarDebate}}"
+										th:alt="${answer.user.ciudadano.fotoAvatarDebate}" />
+								</figure>
+								<div class="post-meta">
+									<ins>
+										<a href="#" title="" th:text="${answer.user.name}"></a>
+										<div class="published-date">
+											<span th:text="''+ ${answer.creationDate}"></span>
+										</div>
+									</ins>
+									<div class="description" style="word-wrap: break-word">
+										<p th:text="${answer.user.accountName}"></p>
+									</div>
+								</div>
+								<div class="post-desc">
+									<p th:text="${answer.text}" style="color: black"></p>
+								</div>
+								<div class="postimg">
+									<img th:if="${answer.image != null}"
+										th:src="@{'/users/uploads/' + ${answer.image}}" alt=""
+										style="">
+								</div>
+								<div class="post-detail">
+									<div class="post-details"
+										th:if="${answer.tags!=null && answer.tags!=''}">
+										<img th:src="@{/images/tag_middle_part.png.png}"
+											title="Add Categoty" alt="" /><span>[[${answer.tags==null?'':answer.tags}]]
+										</span>
+									</div>
+									<div class="post-details" th:if="${answer.themes!=null}">
+										<img src="/images/politics_middle_part.png" title="Politics"
+											alt=""> <span th:each="category : ${answer.themes}"
+											th:text="${category.name}"></span>
+									</div>
+									<div class="post-details"
+										th:if="${answer.location!=null && answer.location!=''}">
+										<img src="/images/location_middle_part.png" title="Location"
+											alt=""> <span th:text="${answer.location}"> </span>
+									</div>
+									<div th:if="${answer.originOpinionId != null}"
+										class="post-details pull-right">
+										<span><a th:href="${'/debate/'+answer.originOpinionId}"
+											title="" class="see-debates arrow-up"><i
+												class="fa fa-arrow-up" aria-hidden="true"></i></a></span>
+									</div>
+								</div>
+								<div class="post-plans">
+									<div th:replace="plantillas :: postResultDiv"></div>
+								</div>
+								<div class="new_posr_toggle">
+									<a href="javascript:;"> <img src="/images/down_arrow.png"
+										alt="">
+									</a>
+								</div>
+							</div>
+							<div class="user-reponse modal-body">
+								
+								<div class="friend-info debate-info">
+									<div class="user-reponse">
+										<div class="user-msg-send">
+											<img th:if="${#authentication.principal.ciudadano == null}"
+												src="/images/resources/admin2.jpg" alt=""> <img
+												th:if="${#authentication.principal.ciudadano != null && #authentication.principal.ciudadano.fotoAvatarMedium != null}"
+												th:src="@{'/users/uploads/' + ${#authentication.principal.ciudadano.fotoAvatarMedium}}" />
+							
+											<div id="debate-init"
+												class="recent-post-design form-control active-input">Write
+												your comments here...</div>
+							
+											<!-- <input type="text" class="form-control active-input"
+												placeholder="Post a comment" onclick="mypost()"> -->
+							
+											<form id="debate-after" method="post"
+												th:action="@{/opinion/createOpinionAndFindAll}"
+												th:object="${opinion}" enctype="multipart/form-data"
+												style="display: none">
+												<div class="recent-post-design">
+							
+												<textarea id="debate-add-post-text" rows="1" cols="75" maxlength="150"
+													placeholder="Write your comments here..."
+													th:field="*{text}" autofocus required="required"
+													style="overflow-y: hidden;"></textarea>
+												<small id="debate-word_left" class="form-text text-danger"></small> <small
+													class="form-text text-danger" th:if="${#fields.hasErrors('text')}"
+													th:errors="*{text}"></small>
+							
+												<div class="recent-post-data">
+													<div id="debate-location" class="recent-post-categories"
+														style="display: none">
+														<span><i class="fa fa-map-marker" title="Add Location"
+															aria-hidden="true"></i></span> <span id="debate-location-text"
+															class=""></span>
+													</div>
+													<div id="debate-tag" class="recent-post-categories"
+														style="display: none">
+														<span><i class="fa fa-tags" title="tags"
+															aria-hidden="true"></i></span>
+														<ul id="debate-tag-text" class=""></ul>
+													</div>
+													<div id="debate-cat" class="recent-post-categories"
+														style="display: none">
+														<span><i class="fa fa-th-large" title="tags"
+															aria-hidden="true"></i></span> <span id="debate-cat-text" class=""></span>
+													</div>
+													<figure id="debate-img" class="userdash-profilepic"
+														style="display: none">
+														<img src="https://dummyimage.com/300.png/09f/fff"
+															alt="image description" id="debate-img-item">
+														<i class="fa fa-times-circle" aria-hidden="true"
+															id="debate-img-del"></i>
+													</figure>
+												</div>
+												</div>
+												<div class="post-project" id="post-project"
+													style="display: inline-block;">
+													<div class="post-detail">
+														<div class="post-details">
+							
+															<img th:src="@{/images/img.png}" alt="" /> <input type="file"
+																id="debate-file" class="upload-profile" th:field="*{file}">
+														</div>
+														<div class="post-details">
+							
+															<img th:src="@{/images/menu.png}" title="Add category" alt=""
+																id="debate-cat-icon" /> <span
+																class="dropdown-container dropdown-menu recent-post-items"
+																id="debate-cat-list-div">
+																<div class="dropdown-caret">
+																	<span class="caret-outer"></span> <span class="caret-inner"></span>
+																</div>
+																<div class="geo-query-location">
+																	<input class="GeoSearch-queryInput" type="text"
+																		placeholder="Search for a category" aria-expanded="true" id="debate-cat-text-newpost">
+																	<span class="Icon Icon--search"></span>
+																</div>
+							
+																<ul class="GeoSearch-dropdownMenu" role="listbox">
+							
+																	<li class="dropdown-link debate-cat-list-newpost"
+																		th:each="theme : ${findAllThemes}" th:data-id="${theme.id}"
+																		th:text="${theme.name}"></li>
+							
+																</ul>
+							
+															</span>
+														</div>
+														<div class="post-details">
+							
+															<img src="/images/tag.png" title="tag" alt=""
+																id="debate-tag-icon"> <span
+																class="dropdown-container dropdown-menu recent-post-items"
+																id="debate-tag-list">
+																<div class="dropdown-caret">
+																	<span class="caret-outer"></span> <span class="caret-inner"></span>
+																</div>
+																<div class="geo-query-location">
+																	<input class="GeoSearch-queryInput" type="text"
+																		placeholder="Search for a tags" aria-expanded="true"
+																		id="debate-tags_input_box"> <span class="Icon Icon--search"></span>
+																</div>
+																<ul class="GeoSearch-dropdownMenu" role="listbox"
+																	id="debate-tags_input_list">
+							
+																	<!-- <li class="dropdown-link tag_input_option"></li> -->
+							
+							
+																</ul>
+															</span>
+														</div>
+														<div class="post-details">
+															<img src="/images/map_pin.png" title="Location" alt=""
+																id="debate-location-icon"> <span
+																class="dropdown-container dropdown-menu debate-items"
+																id="debate-location-block">
+																<div class="dropdown-caret">
+																	<span class="caret-outer"></span> <span class="caret-inner"></span>
+																</div>
+																<div class="geo-query-location">
+																	<input class="GeoSearch-queryInput address-autocomplete"
+																		type="text" placeholder="Search for a city"
+																		aria-expanded="true" id="debate-location-select-text"> <span
+																		class="Icon Icon--search"></span>
+																</div>  
+																<ul class="GeoSearch-dropdownMenu" role="listbox" id="debate-location-menu">
+																	<!-- <li class="dropdown-link">Jaipur Rajasthan</li>
+																	<li class="dropdown-link">West Bengal</li>
+																	<li class="dropdown-link">Oklahoma City</li>
+																	<li class="dropdown-link">New York City</li>
+																	<li class="dropdown-link">Boulder City</li> -->
+																</ul>
+															</span>
+														</div>
+														<div class="pull-right">
+															<!-- <a href="#" class="btn-post">post</a> -->
+															<button id="btnSubmit" class="btn-post"
+																onclick="debate.newPostSubmit(1)">Post</button>
+														</div>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+
+								<div class="loadMore" id="loadMoreDiv">
+
+
+									<!-- recentposts.js -->
+
+
+
+								</div>
+
+							</div>
+							
+						</div>
+						<button class="btn-view btn-load-more">Load More</button>
+					</div>
+					<div class="col-sm-3 right-side">
+						<aside class="sidebar static wow bounceInRight"
+							th:replace="plantillas :: aside_right_fragment"></aside>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<!-- search popup -->
+
+	<div class="modal fade" id="search" role="dialog"
+		th:replace="plantillas :: search_dialog"></div>
+
+	<!-- ADD NEW POST POPUP -->
+
+	<div class="modal fade" id="add-post" role="dialog"
+		th:replace="plantillas :: new_post_dialog"></div>
+
+	<div th:replace="layout/layout :: scriptero"></div>
+
+	<script th:inline="javascript">
+		var page = "debate"
+		/*<![CDATA[*/
+
+		var opId = /*[[${opinion.opinionId}]]*/'';
+
+		/*]]>*/
+	</script>
+	
+
+	<script th:src="@{/js/recentposts.js}"></script>
+	<script th:src="@{/js/debateAnswer.js}"></script>
+
+	<script type="text/javascript">
+		initialize_Location(function(loc) {
+
+			debate.selectlocation(loc);
+		});
+	</script>
+</body>
+</html>

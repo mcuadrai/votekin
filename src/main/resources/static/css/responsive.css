@@ -1,0 +1,449 @@
+/* media query */
+
+@media screen and (max-width: 767px) {
+  header .navbar .navbar-brand span {
+    display: none;
+  }
+  header .navbar-header {
+    width: 15%;
+    float: left;
+  }
+  header .navbar .navbar-brand {
+    width: 100%;
+  }
+  header .navbar .navbar-brand {
+    padding: 13px 15px;
+  }
+  header .nav.navbar-right {
+    width: 90%;
+    float: right;
+    margin: 0;
+    text-align: right;
+  }
+  header .nav.navbar-right li {
+    display: inline-block;
+  }
+  header .navbar a {
+    font-size: 11px;
+    padding: 10px 6px;
+  }
+  header .navbar-right li a img {
+    width: 18px;
+    display: block;
+    margin: auto;
+  }
+  header .navbar a.dropdown-toggle {
+    padding-top: 10px;
+    font-size: 11px;
+  }
+  header .navbar a.dropdown-toggle img {
+    width: 18px;
+  }
+  header .navbar a.btn-post {
+    display: none;
+  }
+
+  /* Middle Content */
+
+  .home-page .left-side .sidebar .widget:first-child {
+    display: none;
+  }
+  .home-page .left-side .sidebar {
+    margin-top: 0;
+    overflow-y: auto;
+    height: 100%;
+  }
+
+  .home-page .left-side {
+    top: 0;
+    left: -304px;
+    padding: 0;
+    background-color: #ffffff;
+    z-index: 9;
+    width: 304px;
+    flex: 0 0 304px;
+    max-width: 304px;
+    height: 100%;
+    position: fixed;
+    transition: all 0.2s ease-in;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.sideMhide .home-page .left-side {
+  left: 0;
+}
+  .home-page .right-side {
+    display: none;
+  }
+  .home-page .center-side {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .user-reponse .user-msg-send img {
+    max-width: 100%;
+    width: 40px;
+  }
+  .home .user-reponse .user-msg-send input {
+    width: calc(100% - 60px);
+  }
+  .home .user-reponse .post-project {
+    width: calc(100% - 23%);
+    margin-left: 65px;
+  }
+  .friend-info > figure img {
+    max-width: 100%;
+  }
+  .friend-info ins {
+    margin-top: 0px;
+    font-size: 12px;
+  }
+  .friend-info ins a {
+    font-size: 13px;
+  }
+  .published-date span {
+    font-size: 11px;
+  }
+  .description > p {
+    font-size: 12px;
+  }
+  .post-desc p {
+    font-size: 13px;
+  }
+  .post-detail .post-details {
+    margin-right: 1px;
+    padding-right: 0px;
+    border-right: none;
+  }
+  .post-project .post-detail .post-details img {
+    width: 20px !important;
+  }
+  .post-detail .post-details img {
+    width: 20px;
+  }
+
+  .see-debate {
+    /* margin-left: 0; */
+    font-size: 13px;
+    display: inline-block;
+    margin-top: 10px;
+  }
+
+  .post-plans .submit-btns {
+    display: block;
+  }
+  .post-plans .submit-btns.climet {
+    float: none !important;
+    margin-top: 10px;
+  }
+  .new_posr_toggle {
+    top: 0;
+  }
+  .new_posr_toggle img {
+    width: 13px;
+  }
+  .mobile-icon {
+    display: block;
+  }
+  .mobile-icon .left-icon {
+    background-color: #088dcd;
+    color: #fff;
+    padding: 8px 13px;
+    top: 65px;
+    left: 100%;
+    cursor: pointer;
+    position: absolute;
+    text-align: center;
+  }
+  .mobile-icon .left-icon i {
+    font-size: 18px;
+  }
+
+  /* Debate page  */
+  .debatepage .user-reponse .user-msg-send input {
+    width: 75%;
+  }
+  .debatepage .post-project {
+    width: calc(100% - 26%);
+    margin-left: 20%;
+  }
+  .debatepage .user-reponse {
+    margin-left: 0px;
+    margin-top: 0;
+  }
+  .debatepage .user-reponse .post-desc {
+    margin-left: 35px;
+    width: 90%;
+  }
+  .debatepage .user-reponse .post-detail {
+    margin-left: 33px;
+    width: calc(100% - 33px);
+  }
+  .debatepage .user-reponse .post-project .post-detail {
+    margin-left: 11px;
+    width: calc(100% - 3px);
+  }
+  .debatepage .user-reponse .post-plans {
+    margin-left: 35px;
+  }
+
+  /* Login page */
+  .registerpage {
+    background-color: #ffffff;
+  }
+  .login-bg {
+    display: none;
+  }
+  .login {
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform: translate(0%, 0%);
+    padding: 15px;
+    box-shadow: none;
+  }
+  .login-logo p {
+    padding: 0px;
+  }
+  .login-form .login-left {
+    width: 100%;
+  }
+  .login-form .login-left h3 {
+    text-align: center;
+  }
+  .login-form .login-left h3::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .login-form .login-left .or {
+    display: none;
+  }
+  .login-form .login-left input {
+    width: 100%;
+  }
+  .login-form .login-right {
+    width: 100%;
+  }
+  .login-form .login-left .forgot-section {
+    width: 100%;
+  }
+  .login-form .login-right .connect-with {
+    margin-top: 35px;
+  }
+  .login-form .login-right .connect-with span::before {
+    left: 20px;
+  }
+  .login-form .login-right .connect-with span::after {
+    right: 20px;
+  }
+  #myProgress img {
+    width: 15px;
+    top: 20px;
+    right: 5px;
+  }
+}
+
+@media screen and (max-width: 767px) and (min-width: 481px) {
+  header .nav.navbar-right {
+      width: 89%;
+  }
+  header .navbar a {
+    font-size: 12px;
+    padding: 12px;
+  }
+  header .navbar .navbar-brand img {
+    width: 25px;
+  }
+  .home .user-reponse .post-project {
+    margin-left: 13%;
+    width: calc(100% - 13%);
+  }
+  .post-detail .post-details {
+    margin-right: 10px;
+  }
+  .post-detail .post-details img {
+    width: 25px;
+  }
+  .post-detail .post-details span {
+    font-size: 14px;
+  }
+  .see-debate {
+    font-size: 14px;
+  }
+  .debatepage .post-project {
+    width: calc(100% - 26%);
+    margin-left: 10%;
+  }
+  .login-form .login-right .connect-with span::before {
+    left: 100px;
+  }
+  .login-form .login-right .connect-with span::after {
+    right: 100px;
+  }
+}
+@media screen and (max-width: 991px) and (min-width: 768px) {
+  header .navbar-header {
+    width: 20%;
+  }
+  header .navbar .navbar-brand {
+    width: 100%;
+  }
+  .sidebar .DashboardProfileCard img {
+    width: 50px;
+    bottom: -30px;
+    left: 5px;
+  }
+  .sidebar .widget .user-profile-name {
+    margin-left: 65px;
+    font-size: 14px;
+  }
+  .sidebar .widget.mobile-icon {
+    display: block;
+  }
+  .sidebar .widget .user-name {
+    margin-left: 65px;
+    font-size: 12px;
+  }
+  .profilecardposts {
+    padding: 0px 5px;
+  }
+  .profilecardposts a {
+    font-size: 12px;
+    border-right: none;
+  }
+  .sidebar .widget > ul {
+    padding: 0 10px 15px;
+  }
+  .sidebar .widget-title {
+    font-size: 14px;
+    padding: 20px 10px 10px;
+}
+  .sidebar .widget li > a {
+    font-size: 14px;
+  }
+  .sidebar .widget .naves li div a {
+    font-size: 14px;
+  }
+  .sidebar .widget > ul li h6 {
+    font-size: 14px;
+  }
+  .switch {
+    width: 35px;
+    height: 18px;
+  }
+  .slider:before {
+    height: 15px;
+    width: 15px;
+  }
+  .user-reponse .user-msg-send img {
+    width: 15%;
+  }
+  .home .user-reponse .user-msg-send input {
+    width: calc(100% - 21%);
+  }
+  .home .user-reponse .post-project {
+    width: calc(100% - 20%);
+    margin-left: 20%;
+  }
+  .friend-info > figure img {
+    max-width: 100%;
+  }
+  .friend-info ins {
+    margin-top: 0px;
+  }
+  .see-debate {
+    margin-left: 0px;
+    margin-top: 8px;
+    display: inline-block;
+  }
+  .post-desc p {
+    font-size: 14px;
+  }
+  .see-more a {
+    font-size: 14px;
+  }
+  .see-more a img {
+    width: 15px;
+  }
+  .sidebar .widget.post li img {
+    width: 10px;
+    float: left;
+    margin-top: 4px;
+  }
+  .sidebar .widget.post li a {
+    float: left;
+    width: calc(100% - 15px);
+    font-size: 12px;
+  }
+  .debatepage .user-reponse .user-msg-send input {
+    width: 79%;
+  }
+  .debatepage .post-project {
+    width: 77%;
+  }
+  .debatepage .user-reponse .post-desc {
+    margin-left: 38px;
+    width: 90%;
+  }
+  .debatepage .user-reponse .post-detail {
+    margin-left: 35px;
+    width: 90%;
+  }
+  .debatepage .user-reponse .post-plans {
+    margin-left: 36px;
+  }
+  .login {
+    width: 100%;
+  }
+  #myProgress img {
+    width: 17px;
+    position: fixed;
+    top: 28px;
+    right: 7px;
+  }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 992px) {
+  header .navbar .navbar-brand {
+    width: 100%;
+  }
+  .user-reponse .user-msg-send img {
+    width: 10%;
+    max-width: 100%;
+  }
+  .home .user-reponse .user-msg-send input {
+    width: calc(100% - 14%);
+  }
+  .home .user-reponse .post-project {
+    width: calc(100% - 15%);
+    margin-left: 15%;
+  }
+  .sidebar .widget.post li img {
+    width: 13px;
+    float: left;
+    margin-top: 4px;
+  }
+  .sidebar .widget.post li a {
+    float: left;
+    width: calc(100% - 20px);
+    font-size: 14px;
+  }
+  .debatepage .user-reponse .post-desc {
+    margin-left: 50px;
+  }
+  .debatepage .user-reponse .post-detail {
+    margin-left: 50px;
+  }
+  .debatepage .user-reponse .post-plans {
+    margin-left: 50px;
+  }
+    #myProgress img {
+    width: 17px;
+    position: fixed;
+    top: 28px;
+    right: 7px;
+  }
+}
