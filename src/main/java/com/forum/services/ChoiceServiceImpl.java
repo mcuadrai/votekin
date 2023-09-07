@@ -3,8 +3,6 @@ package com.forum.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,8 @@ import com.forum.repositories.AnswerRepository;
 import com.forum.repositories.Answer_UserRepository;
 import com.forum.repositories.ChoiceVoteRepository;
 import com.forum.repositories.OpinionChoiceRepository;
+
+import jakarta.annotation.PostConstruct;
 
 @Service("choiceService")
 @Transactional(propagation=Propagation.SUPPORTS, readOnly=true)

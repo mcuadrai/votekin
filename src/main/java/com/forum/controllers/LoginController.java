@@ -3,8 +3,6 @@ package com.forum.controllers;
 import java.security.Principal;
 import java.util.Locale;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
@@ -19,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.forum.commands.UserCommand;
 import com.forum.domain.User;
 import com.forum.services.UserService;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class LoginController {

@@ -2,13 +2,13 @@ package com.forum.services;
 
 import java.util.List;
 
-import javax.mail.MessagingException;
-
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 
 import com.forum.commands.ForgotPasswordCommand;
 import com.forum.commands.UserCommand;
 import com.forum.domain.User;
+
+import jakarta.mail.MessagingException;
 
 public interface UserService {
 

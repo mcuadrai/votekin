@@ -2,18 +2,24 @@ package com.forum.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 
 
 @Configuration
 @EnableWebSecurity
 //@EnableGlobalMethodSecurity(prePostEnabled=true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig  {
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
@@ -38,38 +44,81 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private FacebookConnectionSignup facebookConnectionSignup;*/
+	
 
+
+//	  @Autowired
+//	  private AuthEntryPointJwt unauthorizedHandler;
+//
+//	  @Bean
+//	  public AuthTokenFilter authenticationJwtTokenFilter() {
+//	    return new AuthTokenFilter();
+//	  }
+
+//	@Bean
+//	  public WebSecurityCustomizer webSecurityCustomizer() {
+//	    return (web) -> web.ignoring().requestMatchers("/js/**", "/images/**"); 
+//	  }
 	
+	@Bean
+	  public DaoAuthenticationProvider authenticationProvider() {
+	      DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+	       
+	      authProvider.setUserDetailsService(userDetailsService);
+	      authProvider.setPasswordEncoder(passwordEncoder());
+	   
+	      return authProvider;
+	  }
+	 @Bean
+	  public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+	    return authConfig.getAuthenticationManager();
+	  }
+
+	  @Bean
+	  public PasswordEncoder passwordEncoder() {
+	    return new BCryptPasswordEncoder();
+	  }
 	
+	  //public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
 //	// @formatter:off
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-
+	 @Bean
+	 public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//		    http
+//		    //.csrf(csrf -> csrf.disable())
+//		 //       .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+//		 //       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+////		        .authorizeHttpRequests(auth -> auth
+////		        	  .requestMatchers
+////		               ("/", "/css/**", "/fonts/**", "/icons/**", "/js/**", "/images/**", "/locale",
+////		                "/signup","/prueba/**", "/forgot-password", "/reset-password/**","/users/**",
+////		                "/login*","/signin/**","/signup/**").permitAll()		              
+////		              .anyRequest().authenticated()
+////		              )
+//		        .formLogin((form) -> form
+//		      				.loginPage("/login")
+//		      				//.defaultSuccessUrl("/")
+//		    				.permitAll()
+//		    			)
+//		        .logout((logout) -> logout.permitAll())
+//		    			;
+//		              
+//		    			
+//		             
+////				.and().rememberMe()
+////				.key(rememberMeKey).rememberMeServices(new TokenBasedRememberMeServices(rememberMeKey, userDetailsService))
+////				.and()
+////				.exceptionHandling().accessDeniedPage("/error_403")
+////		              
+////		        );
+////       
+//	
+//		    
+////		 http.authenticationProvider(authenticationProvider());
+//		 
+//		// http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+//		 
 		
-		http.requiresChannel().and()
-		.csrf().disable().
-		authorizeRequests()
-		
-		.antMatchers("/", "/css/**", "/fonts/**", "/icons/**", "/js/**", "/images/**", "/locale").permitAll()
-		.antMatchers("/signup","/prueba/**", "/forgot-password", "/reset-password/**","/users/**").permitAll()
-		.antMatchers("/login*","/signin/**","/signup/**").permitAll()
-		//.antMatchers(HttpMethod.GET,"/actuator/health", "/actuator/info").permitAll()
-		//.mvcMatchers("/admin/**").hasRole("ADMIN")
-		.anyRequest().authenticated()
-		.and()
-		    .formLogin()
-		        //.successHandler(successHandler)
-		        .loginPage("/login")
-		        .defaultSuccessUrl("/")
-		    .permitAll()
-		.and()
-		.logout().permitAll()
-		.and().rememberMe()
-		.key(rememberMeKey).rememberMeServices(new TokenBasedRememberMeServices(rememberMeKey, userDetailsService))
-		.and()
-		.exceptionHandling().accessDeniedPage("/error_403");
-		
-		
+		return http.build();
 						
 	}
 	

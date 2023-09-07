@@ -2,8 +2,6 @@ package com.forum.controllers;
 
 import java.util.Objects;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +16,8 @@ import com.forum.commands.ResetPasswordCommand;
 import com.forum.services.UserService;
 //import com.forum.services.UserService;
 import com.forum.utils.MyUtils;
+
+import jakarta.validation.Valid;
 
 @Controller
 

@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import javax.annotation.PostConstruct;
-import javax.mail.MessagingException;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.forum.commands.ForgotPasswordCommand;
 import com.forum.commands.UserCommand;
 import com.forum.domain.Ciudadano;
@@ -31,6 +29,9 @@ import com.forum.domain.User;
 import com.forum.mail.MailSender;
 import com.forum.repositories.UserRepository;
 import com.forum.utils.MyUtils;
+
+import jakarta.annotation.PostConstruct;
+import jakarta.mail.MessagingException;
 
 @Service("userService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

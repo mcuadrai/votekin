@@ -5,13 +5,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
 public class ResponseModel<T> {
 

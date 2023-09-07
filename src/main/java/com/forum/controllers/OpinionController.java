@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-import javax.validation.Valid;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +40,8 @@ import com.forum.services.OpinionService;
 import com.forum.services.UserService;
 import com.forum.utils.MyUtils;
 import com.google.gson.Gson;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/opinion")

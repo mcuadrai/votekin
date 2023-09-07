@@ -1,11 +1,11 @@
 package com.forum.validation;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-
 import org.springframework.stereotype.Component;
 
 import com.forum.repositories.UserRepository;
+
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 @Component
 public class EmailExistsValidator

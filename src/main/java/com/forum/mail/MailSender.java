@@ -1,6 +1,6 @@
 package com.forum.mail;
 
-import javax.mail.MessagingException;
+import jakarta.mail.MessagingException;
 
 public interface MailSender {
 	

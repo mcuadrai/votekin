@@ -3,15 +3,15 @@ package com.forum.repositories;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Repository;
 
 import com.forum.domain.Opinion;
 import com.forum.model.OpinionFilterModel;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 
 @Repository
 @Transactional

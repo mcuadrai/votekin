@@ -2,8 +2,6 @@ package com.forum.controllers;
 
 import java.util.Locale;
 
-import javax.validation.Valid;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +29,8 @@ import com.forum.responsemodels.ResponseModel.Status;
 import com.forum.services.AnswerService;
 import com.forum.services.OpinionService;
 import com.forum.utils.MyUtils;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/debate")

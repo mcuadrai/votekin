@@ -2,12 +2,12 @@ package com.forum.validation;
 
 import java.util.Objects;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-
 import org.springframework.stereotype.Component;
 
 import com.forum.commands.ResetPasswordCommand;
+
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 @Component
 public class RetypePasswordValidator

@@ -1,11 +1,11 @@
 package com.forum.commands;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
 import com.forum.domain.User;
 import com.forum.validation.Password;
 import com.forum.validation.UniqueEmail;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class UserCommand {
 	

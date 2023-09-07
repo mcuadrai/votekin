@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import javax.mail.MessagingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.Resource;
@@ -38,6 +36,8 @@ import com.forum.services.IUploadFileService;
 import com.forum.services.UserService;
 //import com.forum.services.UserService;
 import com.forum.utils.MyUtils;
+
+import jakarta.mail.MessagingException;
 
 @Controller
 @RequestMapping("/users")

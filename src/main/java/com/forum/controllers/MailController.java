@@ -1,11 +1,11 @@
 package com.forum.controllers;
 
-import javax.mail.MessagingException;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.forum.mail.MailSender;
+
+import jakarta.mail.MessagingException;
 
 @RestController
 public class MailController {

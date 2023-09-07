@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import javax.annotation.PostConstruct;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -30,6 +29,8 @@ import com.forum.repositories.TagListRepository;
 import com.forum.repositories.ThemeRepository;
 import com.forum.repositories.TipoEvaluacionRepository;
 import com.forum.utils.MyUtils;
+
+import jakarta.annotation.PostConstruct;
 
 @Service("opinionService")
 @Transactional(readOnly = true)

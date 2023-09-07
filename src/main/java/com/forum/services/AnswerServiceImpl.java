@@ -3,8 +3,6 @@ package com.forum.services;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +16,8 @@ import com.forum.domain.Answer;
 import com.forum.domain.Opinion;
 import com.forum.repositories.AnswerRepository;
 import com.forum.repositories.OpinionRepository;
+
+import jakarta.annotation.PostConstruct;
 
 @Service("answerService")
 @Transactional(propagation=Propagation.SUPPORTS, readOnly=true)

@@ -1,14 +1,12 @@
 package com.forum.commands;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
-
-
 import com.forum.domain.Answer;
 import com.forum.domain.Opinion;
 import com.forum.domain.User;
 import com.forum.utils.MyUtils;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class AnswerCommand {
 	
