@@ -9,15 +9,18 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 
 @Configuration
 @EnableWebSecurity
+//@EnableWebMvc
 //@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfig  {
 	@Autowired
@@ -75,32 +78,46 @@ public class SecurityConfig  {
 	  }
 
 	  @Bean
-	  public PasswordEncoder passwordEncoder() {
+	  public static PasswordEncoder passwordEncoder() {
 	    return new BCryptPasswordEncoder();
 	  }
 	
 	  //public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
 //	// @formatter:off
+	  
+	  @Bean
+	  MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
+	      return new MvcRequestMatcher.Builder(introspector);
+	  }
 	 @Bean
-	 public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//		    http
-//		    //.csrf(csrf -> csrf.disable())
-//		 //       .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-//		 //       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-////		        .authorizeHttpRequests(auth -> auth
-////		        	  .requestMatchers
-////		               ("/", "/css/**", "/fonts/**", "/icons/**", "/js/**", "/images/**", "/locale",
-////		                "/signup","/prueba/**", "/forgot-password", "/reset-password/**","/users/**",
-////		                "/login*","/signin/**","/signup/**").permitAll()		              
-////		              .anyRequest().authenticated()
-////		              )
+	 public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
+		    http
+		    //.csrf(csrf -> csrf.disable())
+		 //       .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+		        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+		        .authorizeHttpRequests(auth -> auth
+		        	  .requestMatchers
+		               (
+		                mvc.pattern("/"),
+		                mvc.pattern("/css/**"),
+		                mvc.pattern("/fonts/**"),
+		                mvc.pattern("/icons/**"),
+		                mvc.pattern("/js/**"),
+		                mvc.pattern("/images/**"),
+		                mvc.pattern("/locale/**"),
+		                mvc.pattern("/signup/**"), mvc.pattern("/forgot-password"), mvc.pattern("/reset-password/**"), mvc.pattern("/reset-users/**"),
+		                mvc.pattern("/login*"), mvc.pattern("/signin/**"), mvc.pattern("/prueba/**"),mvc.pattern("/signin")
+		               )
+		               .permitAll()		              
+		              .anyRequest().authenticated()
+		              )
 //		        .formLogin((form) -> form
 //		      				.loginPage("/login")
-//		      				//.defaultSuccessUrl("/")
+//		      				.defaultSuccessUrl("/")
 //		    				.permitAll()
 //		    			)
 //		        .logout((logout) -> logout.permitAll())
-//		    			;
+		    			;
 //		              
 //		    			
 //		             
@@ -113,9 +130,9 @@ public class SecurityConfig  {
 ////       
 //	
 //		    
-////		 http.authenticationProvider(authenticationProvider());
+  		 http.authenticationProvider(authenticationProvider());
 //		 
-//		// http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+//		 http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 //		 
 		
 		return http.build();
