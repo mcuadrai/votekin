@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!-- <html lang="en" dir="ltr"> -->
-<head th:replace="layout/layout :: head"></head>
+<head th:replace="~{ layout/layout :: head }"></head>
 <body class="registerpage">
 	<div class="main-body">
 		<div class="login-bg"></div>
@@ -77,6 +77,6 @@
 		</div>
 	</div>
 
-	<div th:replace="layout/layout :: scriptero"></div>
+	<div th:replace="~{ layout/layout :: scriptero}"></div>
 </body>
 </html>

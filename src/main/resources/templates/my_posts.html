@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/layout :: head"></head>
+<head th:replace="~{ layout/layout :: head }"></head>
 <body>
 	<div class="theme-layout">
 		<div th:replace="layout/layout :: responsive-header"></div>
@@ -63,7 +63,7 @@
 
 		<div th:replace="layout/layout :: bottombar"></div>
 	</div>
-	<div th:replace="layout/layout :: scriptero"></div>
+	<div th:replace="~{ layout/layout :: scriptero}"></div>
 
 </body>
 

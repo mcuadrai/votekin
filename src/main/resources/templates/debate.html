@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" >
-<head th:replace="layout/layout :: head"></head>
+<head th:replace="~{ layout/layout :: head }"></head>
 <body>
 	<div class="main-body">
 		<header th:replace="layout/layout :: responsive-header"> </header>
@@ -258,7 +258,7 @@
 	<div class="modal fade" id="add-post" role="dialog"
 		th:replace="plantillas :: new_post_dialog"></div>
 
-	<div th:replace="layout/layout :: scriptero"></div>
+	<div th:replace="~{ layout/layout :: scriptero}"></div>
 
 	<script th:inline="javascript">
 		var page = "debate"

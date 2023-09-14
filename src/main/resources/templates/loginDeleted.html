@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/layout :: head"></head>
+<head th:replace="~{ layout/layout :: head }"></head>
 <body>
 	<!--<div class="se-pre-con"></div>-->
 	<div class="theme-layout gap gray-bg">
@@ -137,7 +137,7 @@
 		</div>
 	</div>
 
-	<div th:replace="layout/layout :: scriptero"></div>
+	<div th:replace="~{ layout/layout :: scriptero}"></div>
 	<script th:if="${errorSignup != null}" type="text/javascript">
 		$('.login-reg-bg').addClass('show');
 	</script>
