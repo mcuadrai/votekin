@@ -3,7 +3,7 @@
 <head th:replace="~{ layout/layout :: head }"></head>
 <body>
 	<div class="theme-layout">
-		<div th:replace="layout/layout :: responsive-header"></div>
+		<div th:replace="~{layout/layout :: responsive-header}"></div>
 				
         <div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
 		<div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>

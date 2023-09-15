@@ -3,18 +3,18 @@
 <head th:replace="~{ layout/layout :: head }"></head>
 <body>
 	<div class="theme-layout">
-		<div th:replace="layout/layout :: responsive-header"></div>
-		<div th:replace="layout/layout :: topbar-stick"></div>
+		<div th:replace="~{layout/layout :: responsive-header}"></div>
+		<div th:replace="~{layout/layout :: topbar-stick}"></div>
 		
-		<div th:replace="layout/layout :: messages" ></div>
+		<div th:replace="~{layout/layout :: messages}" ></div>
 		
       
 		<!-- Hello, Home! -->
 
-		<!-- div th:replace="layout/layout :: footer"></div-->
-		<div th:replace="layout/layout :: bottombar"></div>
+		<!-- div th:replace="~{layout/layout :: footer}"></div-->
+		<div th:replace="~{layout/layout :: bottombar}"></div>
 	</div>
-	<!-- div th:replace="layout/layout :: side-panel"></div-->
+	<!-- div th:replace="~{layout/layout :: side-panel}"></div-->
 	<div th:replace="~{ layout/layout :: scriptero}" ></div>
 </body>
 </html>
