@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
@@ -91,43 +92,42 @@ public class SecurityConfig  {
 	  }
 	 @Bean
 	 public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
-		    http
-		    //.csrf(csrf -> csrf.disable())
-		 //       .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-		        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-		        .authorizeHttpRequests(auth -> auth
-		        	  .requestMatchers
-		               (
-		                mvc.pattern("/"),
-		                mvc.pattern("/css/**"),
-		                mvc.pattern("/fonts/**"),
-		                mvc.pattern("/icons/**"),
-		                mvc.pattern("/js/**"),
-		                mvc.pattern("/images/**"),
-		                mvc.pattern("/locale/**"),
-		                mvc.pattern("/signup/**"), mvc.pattern("/forgot-password"), mvc.pattern("/reset-password/**"), mvc.pattern("/reset-users/**"),
-		                mvc.pattern("/login*"), mvc.pattern("/signin/**"), mvc.pattern("/prueba/**"),mvc.pattern("/signin")
-		               )
-		               .permitAll()		              
-		              .anyRequest().authenticated()
-		              )
+         http
+                 //.csrf(csrf -> csrf.disable())
+                 //       .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                 .authorizeHttpRequests(auth -> auth
+                                 .requestMatchers
+                                         (
+                                                 mvc.pattern("/"),
+                                                 mvc.pattern("/css/**"),
+                                                 mvc.pattern("/fonts/**"),
+                                                 mvc.pattern("/icons/**"),
+                                                 mvc.pattern("/js/**"),
+                                                 mvc.pattern("/images/**"),
+                                                 mvc.pattern("/locale/**"),
+                                                 mvc.pattern("/signup/**"), mvc.pattern("/forgot-password"), mvc.pattern("/reset-password/**"), mvc.pattern("/reset-users/**"),
+                                                 mvc.pattern("/login*"), mvc.pattern("/signin/**"), mvc.pattern("/prueba/**"), mvc.pattern("/signin")
+                                         )
+                                 .permitAll()
+                                 .anyRequest().authenticated()
+                 )
 //		        .formLogin((form) -> form
 //		      				.loginPage("/login")
 //		      				.defaultSuccessUrl("/")
 //		    				.permitAll()
 //		    			)
 //		        .logout((logout) -> logout.permitAll())
-		    			;
+//		    			;
 //		              
 //		    			
 //		             
-////				.and().rememberMe()
-////				.key(rememberMeKey).rememberMeServices(new TokenBasedRememberMeServices(rememberMeKey, userDetailsService))
-////				.and()
-////				.exceptionHandling().accessDeniedPage("/error_403")
-////		              
-////		        );
-////       
+                 .rememberMe(me -> me
+                         .key(rememberMeKey).rememberMeServices(new TokenBasedRememberMeServices(rememberMeKey, userDetailsService)))
+                 .exceptionHandling(handling -> handling.accessDeniedPage("/error_403"))
+		              
+		        ;
+//       
 //	
 //		    
   		 http.authenticationProvider(authenticationProvider());
